@@ -1,6 +1,15 @@
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import React from "react"
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: {
+        default: "Kasa",
+        template: "%s | Kasa",
+    },
+    description: "Location de logements entre particuliers.",
+};
 
 export default function Layout({
                                    children,
@@ -8,7 +17,7 @@ export default function Layout({
     children: React.ReactNode
 }) {
     return (
-        <div className="w-full bg-lightOrange pt-25 min-h-screen flex flex-col">
+        <div className="w-full bg-lightOrange sm:pt-10 min-h-screen flex flex-col items-center justify-center">
 
             <Header/>
 
