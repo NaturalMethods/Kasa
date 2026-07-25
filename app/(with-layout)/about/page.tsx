@@ -17,7 +17,7 @@ export default function About(){
 
         <section className={"flex flex-col pl-6 pr-6 lg:pl-40 lg:pr-40 gap-10 pt-10 pb-10"}>
 
-            <div className="flex flex-col gap-10 max-w-278.75 ">
+            <div className="flex flex-col max-w-278.75 gap-10">
                 <div className="flex flex-col md:ml-45 md:mr-45 gap-2 ">
                     <h2 className={"text-mainRed"}>À propos</h2>
                     <p className={"text-center whitespace-pre-line"}>{`Chez Kasa, nous croyons que chaque voyage mérite un lieu unique où se sentir bien.
@@ -26,16 +26,17 @@ export default function About(){
                         `}
                     </p>
                 </div>
-                <Image
-                    src={"/about/house1.png"}
-                    width={"1115"}
-                    height={"458"}
-                    alt={"Image de maison en bois entouré d'arbres"}
-                    className={"sm:h-[458] sm:w-[1115] rounded-[20px]"}
-                />
+                <div className="relative w-full h-114.5 overflow-hidden rounded-[20px]">
+                    <Image
+                        src="/about/house1.png"
+                        fill
+                        alt="Image de maison en bois entouré d'arbres"
+                        className="object-cover"
+                    />
+                </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col max-w-278.75 md:flex-row gap-4">
                 <div className="flex w-full flex-col justify-center">
                     <h3 className="text-mainRed">Notre mission est simple :</h3>
 
@@ -49,13 +50,14 @@ export default function About(){
                         </p>
 
                         {/* Image affichée uniquement en mobile */}
-                        <Image
-                            src="/about/house2.png"
-                            width={494}
-                            height={458}
-                            alt="Image de maison avec des vitres transparentes et des lumières allumées"
-                            className="block md:hidden w-full h-auto rounded-[20px]"
-                        />
+                        <div className="relative block md:hidden w-full h-114.5 overflow-hidden rounded-[20px]">
+                            <Image
+                                src="/about/house2.png"
+                                fill
+                                alt="Image de maison avec des vitres transparentes et des lumières allumées"
+                                className="object-cover"
+                            />
+                        </div>
 
                         <p className="text-body-medium text-mainRed">
                             Que vous cherchiez un appartement cosy en centre-ville, une maison en bord de mer ou un chalet à la montagne, Kasa vous accompagne pour que chaque séjour devienne un souvenir inoubliable.
