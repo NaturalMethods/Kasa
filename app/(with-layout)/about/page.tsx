@@ -1,4 +1,3 @@
-import {login} from "@/services/auth.service";
 import Image from "next/image";
 
 export const metadata = {
@@ -6,12 +5,6 @@ export const metadata = {
 };
 
 export default function About(){
-
-
-    async function fetcchh() {
-        await login()
-    }
-    fetcchh()
 
     return(
 

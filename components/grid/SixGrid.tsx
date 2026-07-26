@@ -1,19 +1,26 @@
 import {PropertyCard} from "@/components/card/PropertyCard";
+import {PropertyBase} from "@/types/Property";
 
 
-export function SixGrid() {
+interface SixGridProps{
+
+    properties: PropertyBase[]
+
+}
+
+
+export function SixGrid({properties}: SixGridProps) {
 
     return(
 
-        <section className={"grid grid-cols-3 gap-6"}>
-
-            <PropertyCard></PropertyCard>
-            <PropertyCard></PropertyCard>
-            <PropertyCard></PropertyCard>
-            <PropertyCard></PropertyCard>
-            <PropertyCard></PropertyCard>
-            <PropertyCard></PropertyCard>
-
+        //TODO Revoir le responsive de la grille des cards
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {properties.map((property) => (
+                <PropertyCard
+                    key={property.id}
+                    property={property}
+                />
+            ))}
         </section>
 
     )
