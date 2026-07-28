@@ -1,7 +1,7 @@
 import {User} from "@/types/User";
 
 export interface PropertyBase{
-    id: number;
+    id: string;
     slug?: string;
     title: string;
     description?: string;

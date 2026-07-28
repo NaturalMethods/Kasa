@@ -2,15 +2,19 @@
 
 import Image from "next/image";
 import {SixGrid} from "@/components/grid/SixGrid";
-import {getProperties} from "@/services/properties.service";
+import {getFavorites, getProperties} from "@/services/properties.service";
 import {PropertyBase} from "@/types/Property";
 import {useEffect, useState} from "react";
 import {MainRedCard} from "@/components/card/MainRedCard";
 import {LoadingSpinner} from "@/components/input/LoadingSpinner";
+import {useUser} from "@/contexts/useUser";
 
 export default function Home() {
 
+    const {user} = useUser()
+
     const [properties, setProperties] = useState<PropertyBase[]>([]);
+    const [favorites, setFavorites] = useState<PropertyBase[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -22,6 +26,16 @@ export default function Home() {
                 const data = await response.json();
 
                 setProperties(data);
+
+                // TODO Ajouter une route pour récupérer le user depuis token
+                if(!user?.id) console.log("undef user?",user?.id);
+
+                if(!user?.id) return
+                const favResponse = await getFavorites(user?.id);
+                const favData = await favResponse.json();
+
+                setFavorites(favData);
+
             } catch (error) {
                 console.error(error);
             } finally {
@@ -60,7 +74,7 @@ export default function Home() {
                  <LoadingSpinner />
               ) : (
                   <div className="flex flex-col gap-10">
-                      <SixGrid properties={properties.slice(0, 6)} />
+                      <SixGrid properties={properties.slice(0, 6)} favorites={favorites} />
                       <SixGrid properties={properties.slice(6, 12)} />
 
                   </div>

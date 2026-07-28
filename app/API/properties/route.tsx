@@ -1,5 +1,5 @@
 import {getTokenFromCookie} from "@/utils/utils";
-import {apiFetch} from "@/app/API/api";
+import {apiFetch, createErrorResponse} from "@/app/API/api";
 import {NextResponse} from "next/server";
 
 
@@ -11,4 +11,38 @@ export async function GET() {
 
     return NextResponse.json(await data2.json(), { status: data2.status })
 
+}
+
+export async function POST(request: Request) {
+
+    try {
+
+        const body = await request.json();
+
+        const token = await getTokenFromCookie();
+
+        const res = await apiFetch("/api/properties", "POST", token, body);
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            return createErrorResponse(
+                res.status,
+                data.error ?? "Erreur lors de la création de la propriété"
+            );
+        }
+
+        return NextResponse.json(data, {
+            status: res.status,
+        });
+
+    } catch (error) {
+
+        console.error("Create property error:", error);
+
+        return createErrorResponse(
+            500,
+            "Erreur lors de la création de la propriété"
+        );
+    }
 }

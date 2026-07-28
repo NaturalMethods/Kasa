@@ -22,6 +22,30 @@ export async function request(
 
     }
 }
+export async function requestMultipart(
+    path: string,
+    options: RequestInit
+) {
+    try {
+        return await fetch(`${BASE_URL}${path}`, {
+            ...options,
+        });
+
+    } catch (e) {
+
+        return Response.json(
+            {
+                success: false,
+                error: "Server unreachable"
+            },
+            {
+                status: 503
+            }
+        );
+
+    }
+}
+
 
 export function requestFetch(
     url: string,
@@ -40,4 +64,19 @@ export function requestFetch(
             }
             : {}),
     })
+}
+
+export function requestFileFetch(
+    url: string,
+    method: string,
+    body?: FormData
+) {
+    return requestMultipart(url, {
+        method,
+        ...(body
+            ? {
+                body,
+            }
+            : {}),
+    });
 }

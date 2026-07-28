@@ -6,6 +6,7 @@ import {SidePicture} from "@/components/card/SidePicture";
 import {HostCard} from "@/components/card/HostCard";
 import {EquipmentCard} from "@/components/card/EquipmentCard";
 import {PicLightBox} from "@/components/card/PicLightBox";
+import {formatImageUrl} from "@/utils/utils";
 
 interface PropertyPageProps {
     params: Promise<{
@@ -15,12 +16,29 @@ interface PropertyPageProps {
 
 export default async function PropertyPage({ params }: PropertyPageProps){
 
+    // TODO CHECK Fetch avec les ERREURS comme dans signin
+
     const {slug} = await params;
     const propertyId = slug.split("-")[0];
 
     const response = await getProperty(propertyId)
 
-    const property: PropertyDetail = await response.json()
+    const propertyTemp: PropertyDetail = await response.json()
+
+    //TODO  CHecker sur le site en prod si on voit les images provenant du backend
+    // ou faire une route api/images pour que le bff aille chercher les images directement dans le public du backend
+    const property = {
+        ...propertyTemp,
+        cover: formatImageUrl(propertyTemp.cover),
+        pictures: propertyTemp.pictures.map(formatImageUrl),
+        host: propertyTemp.host
+            ? {
+                ...propertyTemp.host,
+                picture: formatImageUrl(propertyTemp.host.picture),
+            }
+            : propertyTemp.host,
+    };
+    console.log(property.cover);
 
     return(
 

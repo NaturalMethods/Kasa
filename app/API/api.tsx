@@ -22,6 +22,30 @@ export async function apiRequest(path: string, options: RequestInit) {
     }
 }
 
+export async function apiFileRequest(
+    path: string,
+    options: RequestInit
+) {
+    try {
+        return await fetch(`${BASE_URL}${path}`, {
+            ...options,
+        });
+
+    } catch (e) {
+
+        return Response.json(
+            {
+                success: false,
+                error: "Backend unreachable"
+            },
+            {
+                status: 503
+            }
+        );
+
+    }
+}
+
 export function createErrorResponse(status:number,error:string) {
 
         return NextResponse.json(
@@ -51,4 +75,25 @@ export function apiFetch(
             }
             : {}),
     })
+}
+
+export function apiFileFetch(
+    url: string,
+    method: string,
+    token?: string,
+    body?: FormData,
+) {
+
+    return apiFileRequest(url, {
+        method,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        ...(body
+            ? {
+                body,
+            }
+            : {}),
+    });
+
 }

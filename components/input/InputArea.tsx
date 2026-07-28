@@ -1,19 +1,17 @@
 
 
-interface InputFieldProps {
+interface InputAreaProps {
 
     name: string;
     id: string;
-    type?: string;
     placeholder?: string;
     value?: string;
     setValue?: (value: string) => void;
     error?: boolean;
     className?: string;
-    readOnly?: boolean;
 }
 
-export function InputField({name,id,type,placeholder="",value,setValue,error = false,className, readOnly}: InputFieldProps) {
+export function InputArea({name,id,placeholder="",value,setValue,error = false,className}: InputAreaProps) {
 
     return(
 
@@ -25,14 +23,12 @@ export function InputField({name,id,type,placeholder="",value,setValue,error = f
                 {name}
             </label>
 
-            <input
+            <textarea
                 id={id}
-                type={type}
-                readOnly={readOnly}
                 placeholder={placeholder}
                 value={value}
-                onChange={(e) => setValue?.(e.target.value)}
-                className={`w-81.5 sm:w-90 h-10 rounded-sm px-2.5 border bg-white ${error ? "border-red-500 border-2" : "border-lightGrey"} ${className}`}
+                onChange={(e) => setValue?.(e.target.value) }
+                className={`w-81.5 sm:w-90 h-10 pt-1 rounded-sm px-2.5 border bg-white ${error ? "border-red-500 border-2" : "border-lightGrey"} ${className}`}
             />
         </div>
 

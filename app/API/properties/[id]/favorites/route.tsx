@@ -9,8 +9,8 @@ export async function GET(request: Request,
 
     const token = await getTokenFromCookie()
 
-    const data2 = await apiFetch(`/api/properties/${id}`, "GET", token)
+    const data = await apiFetch(`/api/users/${id}/favorites`, "GET", token)
 
-    return NextResponse.json(await data2.json(), { status: data2.status })
+    return NextResponse.json(await data.json(), { status: data.status })
 
 }

@@ -1,3 +1,4 @@
+import {PropertyDetail} from "@/types/Property";
 
 export interface LoginFormData {
     email: string;
@@ -79,4 +80,66 @@ export function validateLoginForm(data: LoginFormData) {
         errors,
     };
 
+}
+
+interface NewPropertyFormData {
+    property: PropertyDetail;
+    propertyCoverFile: File | null;
+    propertyPicturesFile: (File | null)[];
+    hostPicFile: File | null;
+}
+
+export function validateNewPropertyForm(data: NewPropertyFormData) {
+
+    const errors: {
+        title?: string;
+        description?: string;
+        location?: string;
+        price_per_night?: string;
+        cover?: string;
+        pictures?: string;
+        hostName?: string;
+        hostPicture?: string;
+    } = {};
+
+    if (!data.property.title.trim()) {
+        errors.title = "Le titre est obligatoire";
+    }
+
+    if (!data.property.description?.trim()) {
+        errors.description = "La description est obligatoire";
+    }
+
+    if (!data.property.location?.trim()) {
+        errors.location = "La localisation est obligatoire";
+    }
+
+    //TODO Ajouter un champ prix par nuit dans l'ajout d'une propriété ?
+    //if (!data.property.price_per_night || data.property.price_per_night <= 0) {
+      //  errors.price_per_night = "Le prix est obligatoire";
+    //}
+
+    if (!data.propertyCoverFile) {
+        errors.cover = "L'image de couverture est obligatoire";
+    }
+
+    if (
+        data.propertyPicturesFile.length === 0 ||
+        data.propertyPicturesFile.every((file) => file === null)
+    ) {
+        errors.pictures = "Au moins une image du logement est obligatoire";
+    }
+
+    if (!data.property.host?.name.trim()) {
+        errors.hostName = "Le nom de l'hôte est obligatoire";
+    }
+
+    if (!data.hostPicFile) {
+        errors.hostPicture = "La photo de l'hôte est obligatoire";
+    }
+
+    return {
+        isValid: Object.keys(errors).length === 0,
+        errors,
+    };
 }

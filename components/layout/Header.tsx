@@ -83,7 +83,7 @@ export default function Header() {
 
                     <Link
                         className="font-inter text-[14px] font-normal text-mainRed"
-                        href="/"
+                        href="/property/new"
                     >
                         +Ajouter un logement
                     </Link>
@@ -91,7 +91,7 @@ export default function Header() {
 
                     <div className="flex flex-row gap-2">
 
-                        <Link href="/about" aria-label="Favoris">
+                        <Link href="/favorites" aria-label="Favoris">
                             <Image
                                 src="/icons/Heart.svg"
                                 width={10}

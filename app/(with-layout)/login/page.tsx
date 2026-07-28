@@ -19,7 +19,7 @@ export default function Login() {
     const [loginError, setLoginError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const {user,setUser} = useUser()
+    const {setUser} = useUser()
 
     const [errors, setErrors] = useState<{
         email?: string;
@@ -69,13 +69,13 @@ export default function Login() {
             }
 
             const resjson = await res.json();
+
             setUser({
                 id: resjson.user.id,
                 name: resjson.user.firstName,
                 email: resjson.user.email,
                 role: resjson.user.role,
             })
-
 
             router.push("/")
             router.refresh()

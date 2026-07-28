@@ -93,10 +93,10 @@ export function MobileMenu({isMenuOpen, setIsMenuOpen}: MobileMenuProps) {
                 <MobileLink text={"Messagerie"} toLink={"/about"} setIsMenuOpen={setIsMenuOpen}/>
                 <hr className="border-lightGrey"/>
 
-                {/* TODO changer le lien du bouton Favoris dans le header */}
-                <MobileLink text={"Favoris"} toLink={"/about"} setIsMenuOpen={setIsMenuOpen}/>
+                <MobileLink text={"Favoris"} toLink={"/favorites"} setIsMenuOpen={setIsMenuOpen}/>
 
             </nav>
+            {/* TODO changer le lien du bouton ajouter un logement dans menu mobile */}
             <button inert={!isMenuOpen}
                     type="button"
                     className="sm:hidden bg-mainRed text-white font-inter text-[14px] w-50 h-9 rounded-[10px] px-8 py-2 flex items-center justify-center gap-2.5">
