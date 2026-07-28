@@ -24,7 +24,7 @@ export default function Signin() {
     const [registerError, setRegisterError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const {user,setUser} = useUser()
+    const {setUser} = useUser()
 
     const [errors, setErrors] = useState<{
         lastname?: string;
@@ -88,10 +88,6 @@ export default function Signin() {
                 email: resjson.user.email,
                 role: resjson.user.role,
             })
-
-            // TODO Créer un contexte utilisateur pour le sauvegarder
-
-            console.log("user:",user, "resjson:",resjson.user);
 
             router.push("/")
             router.refresh()

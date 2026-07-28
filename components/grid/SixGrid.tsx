@@ -14,8 +14,7 @@ export function SixGrid({properties, favorites = []}: SixGridProps) {
 
     return (
 
-        //TODO Revoir le responsive de la grille des cards
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="w-full md:grid flex flex-col md:grid-cols-2 lg:grid-cols-3 gap-6 items-center ">
             {properties.map((property) => (
                 <PropertyCard
                     key={property.id}

@@ -67,8 +67,6 @@ export default function NewProperty(){
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        //TODO faire l'envoi du formulaire a l'API et les différents envoie au backend
-
         setErrors({});
 
         const validation = validateNewPropertyForm({
@@ -78,7 +76,7 @@ export default function NewProperty(){
             hostPicFile,
         });
 
-        //TODO vérifier que les fichiers sont des images cotés serveur
+        //TODO vérifier que les fichiers sont des images cotés serveur (API)
         if (!validation.isValid) {
             console.log(validation.errors);
             setErrors(validation.errors);
@@ -219,6 +217,7 @@ export default function NewProperty(){
                                         })
                                     }
                                     error={!!errors.hostName}
+                                    className={"w-full"}
                         />
                         <InputPic name={"Photo de profil"} id={"hostpic"} setFile={setHostPicFile} error={!!errors.hostPicture} />
                     </div>
@@ -228,7 +227,7 @@ export default function NewProperty(){
 
 
             </div>
-            <div className={"flex flex-row w-full gap-4"}>
+            <div className={"flex flex-col lg:flex-row w-full gap-4"}>
                 <EquipmentsForm
                     selectedEquipments={property.equipments}
                     setSelectedEquipments={(equipments) =>

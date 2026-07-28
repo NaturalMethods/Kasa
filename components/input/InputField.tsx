@@ -17,7 +17,7 @@ export function InputField({name,id,type,placeholder="",value,setValue,error = f
 
     return(
 
-        <div className="flex flex-col gap-1">
+        <div className={`flex flex-col gap-1 ${className}`}>
             <label
                 htmlFor={id}
                 className="font-inter text-[14px] font-medium"

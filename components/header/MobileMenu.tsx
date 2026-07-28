@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface MobileMenuProps {
     isMenuOpen: boolean,
@@ -66,6 +67,8 @@ function MobileLink({text, toLink, setIsMenuOpen}: MobileLinkProps) {
 
 export function MobileMenu({isMenuOpen, setIsMenuOpen}: MobileMenuProps) {
 
+    const router = useRouter();
+
     return (
         <div className={"flex flex-col gap-10"}>
             <div className="flex w-full flex-row justify-between sm:hidden">
@@ -96,10 +99,12 @@ export function MobileMenu({isMenuOpen, setIsMenuOpen}: MobileMenuProps) {
                 <MobileLink text={"Favoris"} toLink={"/favorites"} setIsMenuOpen={setIsMenuOpen}/>
 
             </nav>
-            {/* TODO changer le lien du bouton ajouter un logement dans menu mobile */}
-            <button inert={!isMenuOpen}
-                    type="button"
-                    className="sm:hidden bg-mainRed text-white font-inter text-[14px] w-50 h-9 rounded-[10px] px-8 py-2 flex items-center justify-center gap-2.5">
+            <button
+                type="button"
+                inert={!isMenuOpen}
+                onClick={() => router.push("/property/new")}
+                className="sm:hidden bg-mainRed text-white font-inter text-[14px] w-50 h-9 rounded-[10px] px-8 py-2 flex items-center justify-center gap-2.5"
+            >
                 Ajouter un logement
             </button>
         </div>

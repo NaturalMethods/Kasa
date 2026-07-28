@@ -38,7 +38,7 @@ export function InputPic({
 
 
     return (
-        <div className="flex flex-row items-baseline-last justify-center gap-2">
+        <div className="flex flex-row items-baseline-last gap-2">
 
             <input
                 ref={fileInputRef}
