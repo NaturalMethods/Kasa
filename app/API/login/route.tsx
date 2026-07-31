@@ -1,4 +1,4 @@
-import {apiRequest, createErrorResponse} from "@/app/API/api";
+import {apiRequest, createErrorResponse} from "@/app/api/api";
 import {NextResponse} from "next/server";
 
 export async function POST(req: Request) {

@@ -1,5 +1,7 @@
-import {requestFileFetch} from "@/services/request.service";
+import {requestFetch, requestFileFetch} from "@/services/request.service";
 
+
+//TODO si c'est un owner qui upload et supprime les images ?
 export async function uploadImage(file: File, purpose: string) {
 
     const formData = new FormData();
@@ -7,7 +9,20 @@ export async function uploadImage(file: File, purpose: string) {
     formData.append("file", file);
     formData.append("purpose", purpose);
 
-    return requestFileFetch("/API/uploads/image", "POST", formData);
+    return requestFileFetch("/api/uploads/image", "POST", formData);
+}
+
+export async function deleteImages(filenames: (string | undefined)[]) {
+    return await requestFetch(
+        "/api/uploads/image",
+        "DELETE",
+        {
+            filenames: filenames.filter(
+                (filename): filename is string =>
+                    filename !== undefined && filename.trim() !== ""
+            ),
+        }
+    );
 }
 
 interface UploadPropertyImagesParams {

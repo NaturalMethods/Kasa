@@ -55,6 +55,7 @@ export function requestFetch(
 
     return request(url, {
         method: method,
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },

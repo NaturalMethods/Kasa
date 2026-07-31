@@ -96,12 +96,13 @@ export function CategoriesForm({
             <div className="flex flex-row items-baseline-last gap-2">
 
                 <InputField
-                    name=""
+                    name="Nouveau Tag"
                     id="newTag"
                     value={newCategory}
                     setValue={setNewCategory}
                     placeholder="Nouveau tag"
                     className="w-full"
+                    labelVisible={false}
                 />
 
                 <MainRedButton

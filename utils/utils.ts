@@ -1,19 +1,28 @@
-import {cookies} from "next/headers";
 
-export async function getTokenFromCookie(){
-
-    const cookieStore = await cookies()
-    return cookieStore.get("kasatoken")?.value
-
-}
-
-export function formatImageUrl(path?: string) {
+/*export function formatImageUrl(path?: string) {
 
     if (!path) return "";
 
     if (path.startsWith("/uploads/")) {
-        return `http://${process.env.BACKEND_PUBLIC}:${process.env.BACKEND_PORT}${path}`;
+        const filename = path.replace("/uploads/", "");
+
+        return `/api/uploads/image/${filename}`;
     }
 
     return path;
+}
+*/
+export function formatImageUrl(image?: string) {
+
+    if (!image) {
+        return "/icons/ImgNotFound.svg";
+    }
+
+    // image S3
+    if (image.startsWith("https://")) {
+        return `/api/images/${encodeURIComponent(image)}`;
+    }
+
+    // image backend
+    return `/api/uploads/image/${image}`;
 }

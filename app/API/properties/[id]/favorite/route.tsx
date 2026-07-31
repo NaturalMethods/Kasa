@@ -1,6 +1,6 @@
-import {apiFetch, createErrorResponse} from "@/app/API/api";
+import {apiFetch, createErrorResponse} from "@/app/api/api";
 import {NextResponse} from "next/server";
-import {getTokenFromCookie} from "@/utils/utils";
+import {getTokenFromCookie} from "@/utils/utilsServer";
 
 export async function POST(request: Request,
                            context: { params: Promise<{ id: string }> }) {

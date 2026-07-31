@@ -11,14 +11,16 @@ import {useUser} from "@/contexts/useUser";
 
 export default function Home() {
 
-    const {user} = useUser()
+    const { user } = useUser();
 
     const [properties, setProperties] = useState<PropertyBase[]>([]);
     const [favorites, setFavorites] = useState<PropertyBase[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        async function getListOfProperties() {
+        console.log("useEffect user:", user);
+
+        async function loadData() {
             setLoading(true);
 
             try {
@@ -27,26 +29,29 @@ export default function Home() {
 
                 setProperties(data);
 
-                // TODO Ajouter une route pour récupérer le user depuis token
-                if(!user?.id) console.log("undef user?",user?.id);
+                console.log("user avant favoris:", user);
 
-                if(!user?.id) return
-                const favResponse = await getFavorites(user?.id);
+                if (!user?.id) {
+                    console.log("Pas d'id user, abandon favoris");
+                    return;
+                }
+
+                const favResponse = await getFavorites(user.id);
                 const favData = await favResponse.json();
+
+                console.log("favoris reçus:", favData);
 
                 setFavorites(favData);
 
             } catch (error) {
                 console.error(error);
             } finally {
-                setTimeout(() => {
-                    setLoading(false);
-                }, 500);
+                setLoading(false);
             }
         }
 
-        getListOfProperties();
-    }, []);
+        loadData();
+    }, [user]);
 
   return (
 
@@ -62,23 +67,25 @@ export default function Home() {
                       fill
                       alt="Image de maison en bois dans une plaine"
                       className="object-cover"
+                      preload
                   />
               </div>
           </div>
-          <div
-              className={`overflow-hidden transition-[max-height] duration-500 ease-in-out ${
-                  loading ? "max-h-20" : "max-h-fit"
-              }`}
-          >
-              {loading ? (
-                 <LoadingSpinner />
-              ) : (
-                  <div className="flex flex-col gap-10">
-                      <SixGrid properties={properties.slice(0, 6)} favorites={favorites} />
-                      <SixGrid properties={properties.slice(6, 12)} />
-                  </div>
-              )}
-          </div>
+
+          <LoadingSpinner loading={loading}>
+              <SixGrid properties={properties.slice(0, 6)} favorites={favorites} />
+              <SixGrid properties={properties.slice(6, 12)} />
+          </LoadingSpinner>
+
+
+
+
+
+
+
+
+
+
 
           <div className="bg-white flex flex-col gap-10 items-center justify-center rounded-[10px] pt-10 lg:p-10 pl-2 pr-2">
               <div className="flex flex-col gap-4">

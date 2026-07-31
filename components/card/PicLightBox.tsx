@@ -4,14 +4,14 @@ import Image from "next/image";
 import {useEffect, useState} from "react";
 
 interface PicLightBoxProps {
-    src: string;
+    src?: string;
     alt?: string;
     className?: string;
     objectPosition?: string;
 }
 
 export function PicLightBox({
-                                src,
+                                src ="/icons/ImgNotFound.svg",
                                 alt="Titre d'image",
                                 className = "",
                                 objectPosition = "object-cover object-left",

@@ -11,24 +11,26 @@ interface InputFieldProps {
     error?: boolean;
     className?: string;
     readOnly?: boolean;
+    labelVisible?: boolean;
 }
 
-export function InputField({name,id,type,placeholder="",value,setValue,error = false,className, readOnly}: InputFieldProps) {
+export function InputField({name,id,type,placeholder="",value,setValue,error = false,className, readOnly, labelVisible = true}: InputFieldProps) {
 
     return(
 
         <div className={`flex flex-col gap-1 ${className}`}>
-            <label
+            {labelVisible && <label
                 htmlFor={id}
                 className="font-inter text-[14px] font-medium"
             >
                 {name}
-            </label>
+            </label>}
 
             <input
                 id={id}
                 type={type}
                 readOnly={readOnly}
+                aria-label={name || placeholder}
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => setValue?.(e.target.value)}

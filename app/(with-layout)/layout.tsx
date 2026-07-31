@@ -17,7 +17,7 @@ export default function Layout({
     children: React.ReactNode
 }) {
     return (
-        <div className="w-full bg-lightOrange sm:pt-10 min-h-screen flex flex-col items-center justify-center">
+        <div className="w-full bg-lightOrange sm:pt-10 min-h-screen flex flex-col items-center justify-cente">
 
             <Header/>
 

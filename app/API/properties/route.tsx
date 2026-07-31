@@ -1,5 +1,5 @@
-import {getTokenFromCookie} from "@/utils/utils";
-import {apiFetch, createErrorResponse} from "@/app/API/api";
+import {getTokenFromCookie} from "@/utils/utilsServer";
+import {apiFetch, createErrorResponse} from "@/app/api/api";
 import {NextResponse} from "next/server";
 
 

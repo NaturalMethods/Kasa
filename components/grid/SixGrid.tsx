@@ -1,5 +1,6 @@
 import {PropertyCard} from "@/components/card/PropertyCard";
 import {PropertyBase} from "@/types/Property";
+import {useEffect} from "react";
 
 
 interface SixGridProps {
@@ -9,6 +10,12 @@ interface SixGridProps {
 
 
 export function SixGrid({properties, favorites = []}: SixGridProps) {
+
+    useEffect(() => {
+
+
+
+    }, [favorites]);
 
     const favoriteIds = new Set(favorites.map((fav) => fav.id));
 

@@ -114,11 +114,6 @@ export function validateNewPropertyForm(data: NewPropertyFormData) {
         errors.location = "La localisation est obligatoire";
     }
 
-    //TODO Ajouter un champ prix par nuit dans l'ajout d'une propriété ?
-    //if (!data.property.price_per_night || data.property.price_per_night <= 0) {
-      //  errors.price_per_night = "Le prix est obligatoire";
-    //}
-
     if (!data.propertyCoverFile) {
         errors.cover = "L'image de couverture est obligatoire";
     }

@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { PropertyBase } from "@/types/Property";
 import {addFavorite, removeFavorite} from "@/services/properties.service";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {formatImageUrl} from "@/utils/utils";
 
 interface PropertyCardProps {
     property: PropertyBase;
@@ -13,6 +14,10 @@ interface PropertyCardProps {
 export function PropertyCard({ property, favorite = false}: PropertyCardProps) {
 
     const [isFavorite, setIsFavorite] = useState(favorite);
+
+    useEffect(() => {
+        setIsFavorite(favorite);
+    }, [favorite]);
 
     async function handleFavorite() {
 
@@ -33,18 +38,19 @@ export function PropertyCard({ property, favorite = false}: PropertyCardProps) {
     }
 
     return (
-        <div className="relative w-full max-w-[355px] min-w-0">
+        <div className="relative w-full max-w-88.75 min-w-0">
             <Link
                 href={`/property/${property.id}-${property.slug}`}
                 className="block w-full rounded-[20px] bg-white transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mainRed"
             >
                 <div className="relative h-94 w-full overflow-hidden rounded-t-[20px]">
                     <Image
-                        src={property.cover ?? "/home/homeheader.svg"}
+                        src={formatImageUrl(property.cover) || "/icons/ImgNotFound.svg"}
                         fill
                         sizes="(max-width: 768px) 100vw, 355px"
                         alt={property.title}
                         className="object-cover"
+                        quality={60}
                     />
                 </div>
 

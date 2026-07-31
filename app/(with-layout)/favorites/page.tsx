@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {PropertyBase} from "@/types/Property";
 import {getFavorites} from "@/services/properties.service";
 import {useUser} from "@/contexts/useUser";
+import {LoadingSpinner} from "@/components/input/LoadingSpinner";
 
 
 export default function Favorites(){
@@ -12,9 +13,10 @@ export default function Favorites(){
     const {user} = useUser()
 
     const [favorites, setFavorites] = useState<PropertyBase[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
         async function getListOfFavorites() {
             setLoading(true);
 
@@ -36,14 +38,12 @@ export default function Favorites(){
         }
 
         getListOfFavorites();
-    }, []);
+    }, [user]);
 
     useEffect(() => {
 
         console.log("Favorites:",favorites);
     },[favorites]);
-
-    //TODO Loading pendant le chargement des favoris
 
     return(
 
@@ -54,8 +54,9 @@ export default function Favorites(){
                 <p className={"text-center whitespace-pre-line"}>{`Retrouvez ici tous les logements que vous avez aimés.
                     Prêts à réserver ? Un simple clic et votre prochain séjour est en route.`}</p>
             </div>
-
-            <SixGrid properties={favorites} favorites={favorites} />
+            <LoadingSpinner loading={loading}>
+                <SixGrid properties={favorites} favorites={favorites}/>
+            </LoadingSpinner>
 
         </section>
 

@@ -1,42 +1,55 @@
-import { getTokenFromCookie } from "@/utils/utils";
-import {apiFileFetch, createErrorResponse} from "@/app/API/api";
+import { getTokenFromCookie } from "@/utils/utilsServer";
+import {apiFetch, apiFileFetch, createErrorResponse} from "@/app/api/api";
 import { NextResponse } from "next/server";
 
-
 export async function POST(request: Request) {
-
     try {
 
-        // Récupération du fichier + données envoyées par le front
+        //TODO ajouter une sécurité en prenant une bibliothèque qui va lire le magic bytes
         const formData = await request.formData();
 
-        const file = formData.get("file");
+        const files = formData.getAll("file");
         const purpose = formData.get("purpose");
 
+        console.log("files:", files);
 
-        console.log("file:", file);
-        console.log("purpose:", purpose);
-
-
-        if (!(file instanceof File)) {
+        if (files.length === 0) {
             return createErrorResponse(400, "Aucun fichier envoyé");
         }
 
+        if (files.length > 1) {
+            return createErrorResponse(400, "Un seul fichier est autorisé");
+        }
+
+        const file = files[0];
+
+        if (!(file instanceof File)) {
+            return createErrorResponse(400, "Fichier invalide");
+        }
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/gif",
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            return createErrorResponse(
+                400,
+                "Le fichier doit être une image au format JPEG, PNG, WEBP ou GIF"
+            );
+        }
 
         if (typeof purpose !== "string") {
             return createErrorResponse(400, "Purpose manquant");
         }
 
-
         const token = await getTokenFromCookie();
 
-
-        // Nouveau FormData pour le vrai backend
         const backendFormData = new FormData();
-
         backendFormData.append("file", file);
         backendFormData.append("purpose", purpose);
-
 
         const res = await apiFileFetch(
             "/api/uploads/image",
@@ -45,27 +58,71 @@ export async function POST(request: Request) {
             backendFormData
         );
 
-
         const data = await res.json();
-
 
         if (!res.ok) {
             return createErrorResponse(res.status, data.error);
         }
 
-
         return NextResponse.json(data, {
             status: res.status,
         });
-
-
     } catch (error) {
-
         console.error("Upload image error:", error);
 
         return createErrorResponse(
             500,
             "Erreur lors de l'upload de l'image"
+        );
+    }
+}
+
+
+export async function DELETE(request: Request) {
+    try {
+        const body = await request.json();
+
+        const { filenames } = body;
+
+        console.log("filename:",filenames);
+
+        if (!Array.isArray(filenames) || filenames.length === 0) {
+            return createErrorResponse(
+                400,
+                "Aucun nom de fichier fourni"
+            );
+        }
+
+        const token = await getTokenFromCookie();
+
+        const res = await apiFetch(
+            "/api/uploads/images",
+            "DELETE",
+            token,
+            {
+                filenames,
+            }
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            return createErrorResponse(
+                res.status,
+                data.error ?? "Erreur lors de la suppression des images"
+            );
+        }
+
+        return NextResponse.json(data, {
+            status: res.status,
+        });
+
+    } catch (error) {
+        console.error("Delete images error:", error);
+
+        return createErrorResponse(
+            500,
+            "Erreur lors de la suppression des images"
         );
     }
 }

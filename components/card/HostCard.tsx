@@ -17,7 +17,7 @@ export function HostCard({property }: HostCardProps){
 
                 <div className="relative h-20.5 w-20.5 overflow-hidden rounded-[20px]">
                     <Image
-                        src={property?.host?.picture ?? "/home/homeheader.svg"}
+                        src={property?.host?.picture  || "/icons/ImgNotFound.svg"}
                         fill
                         sizes="303px"
                         alt={property?.title ?? "Titre d'image"}

@@ -8,7 +8,7 @@ import {InputArea} from "@/components/input/InputArea";
 import {PropertyPicsForm} from "@/components/input/PropertyPicsForm";
 import {InputPic} from "@/components/input/InputPic";
 import {PropertyDetail} from "@/types/Property";
-import {uploadPropertyImages} from "@/services/uploads.service";
+import {deleteImages, uploadPropertyImages} from "@/services/uploads.service";
 import {validateNewPropertyForm} from "@/utils/validation";
 import {createProperty} from "@/services/properties.service";
 import {EquipmentsForm} from "@/components/input/EquipmentsForm";
@@ -39,6 +39,13 @@ export default function NewProperty(){
         },
     });
 
+    interface uploadedImg{
+
+        url:string,
+        purpose:string,
+
+    }
+
     const [propertyCoverFile, setPropertyCoverFile] = useState<File | null>(null);
     const [propertyPicturesFile, setPropertyPicturesFile] = useState<(File | null)[]>([null]);
     const [hostPicFile, setHostPicFile] = useState<File | null>(null);
@@ -64,6 +71,46 @@ export default function NewProperty(){
         }));
     }
 
+    async function sendProperty(propertyPayload: PropertyDetail) {
+
+        const response = await createProperty(propertyPayload);
+
+        if (!response.ok) {
+            throw new Error("Impossible de créer la propriété");
+        }
+
+        const createdProperty = await response.json();
+
+        router.push(`/property/${createdProperty.id}-${createdProperty.slug}`);
+        router.refresh();
+
+    }
+    function getUrlImages(uploadedImages:uploadedImg[]){
+        const cover = uploadedImages.find(
+            (upload) => upload.purpose === "property-cover"
+        )!.url;
+
+        const pictures = uploadedImages
+            .filter((upload) => upload.purpose === "property-picture")
+            .map((upload) => upload.url);
+
+        const hostPicture = uploadedImages.find(
+            (upload) => upload.purpose === "host-picture"
+        )!.url;
+
+        // 3 - Construction payload
+        return {
+            ...property,
+            cover,
+            pictures,
+            host: {
+                ...property.host!,
+                picture: hostPicture,
+            },
+        };
+
+    }
+
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
@@ -76,74 +123,93 @@ export default function NewProperty(){
             hostPicFile,
         });
 
-        //TODO vérifier que les fichiers sont des images cotés serveur (API)
         if (!validation.isValid) {
-            console.log(validation.errors);
             setErrors(validation.errors);
             return;
         }
 
-        try {
+        let uploadedImages: { url: string; purpose: string }[] = [];
 
+        try {
             // 1 - Upload des images
-            const uploads = await uploadPropertyImages({
+            uploadedImages = await uploadPropertyImages({
                 cover: propertyCoverFile,
                 pictures: propertyPicturesFile,
                 hostPicture: hostPicFile,
             });
 
-            //TODO une image ne s'est pas uploadé ? error
-            console.log("Images uploadées :", uploads);
+            console.log("Images uploadées :", uploadedImages);
 
-// 2 - Récupération des URLs
-            const cover = uploads.find(
+
+            // Vérification que tous les uploads attendus sont présents
+            const hasCover = uploadedImages.some(
                 (upload) => upload.purpose === "property-cover"
-            )?.url ?? "";
+            );
 
-            const pictures = uploads
-                .filter((upload) => upload.purpose === "property-picture")
-                .map((upload) => upload.url);
+            const picturesCount = uploadedImages.filter(
+                (upload) => upload.purpose === "property-picture"
+            ).length;
 
-            const hostPicture = uploads.find(
+            const hasHostPicture = uploadedImages.some(
                 (upload) => upload.purpose === "host-picture"
-            )?.url ?? "";
+            );
 
 
-            // 3 - Construction du payload propriété
-            const propertyPayload = {
-                ...property,
-                cover,
-                pictures,
-                host: {
-                    ...property.host!,
-                    picture: hostPicture,
-                },
-            };
-
-            console.log("Property à envoyer :", propertyPayload);
-
-
-            // 4 - POST création propriété
-            const response = await createProperty(propertyPayload);
-
-            if (!response.ok) {
-                //TODO gestion erreur
-                return;
+            if (!hasCover) {
+                throw new Error("cover");
             }
 
-            const createdProperty = await response.json();
+            if (picturesCount !== propertyPicturesFile.filter(Boolean).length) {
+                throw new Error("pictures");
+            }
 
-            console.log(createdProperty);
+            if (!hasHostPicture) {
+                throw new Error("hostPicture");
+            }
 
-            router.push(`/property/${createdProperty.id}-${createdProperty.slug}`)
-            router.refresh()
+            const propertyPayload = getUrlImages(uploadedImages);
 
+            await sendProperty(propertyPayload);
 
 
         } catch (error) {
             console.error("Erreur création propriété :", error);
-        }
 
+            if (uploadedImages.length > 0) {
+                try {
+                    await deleteImages(uploadedImages.map((image) => image.url));
+                } catch (deleteError) {
+                    console.error(
+                        "Erreur suppression images temporaires :",
+                        deleteError
+                    );
+                }
+            }
+
+            if (error instanceof Error) {
+                if (error.message === "cover") {
+                    setErrors({
+                        cover: "L'image de couverture n'a pas pu être uploadée",
+                    });
+                }
+
+                if (error.message === "pictures") {
+                    setErrors({
+                        pictures: "Une ou plusieurs images n'ont pas pu être uploadées",
+                    });
+                }
+
+                if (error.message === "hostPicture") {
+                    setErrors({
+                        hostPicture: "La photo de profil de l'hôte n'a pas pu être uploadée",
+                    });
+                }
+            } else {
+                setErrors({
+                    pictures: "Une erreur est survenue lors de la création",
+                });
+            }
+        }
     }
     return(
 
