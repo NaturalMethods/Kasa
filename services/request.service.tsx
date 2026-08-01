@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3001"
+const BASE_URL = process.env.IP+":3001"
 
 export async function request(
     path: string,
