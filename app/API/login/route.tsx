@@ -25,10 +25,18 @@ export async function POST(req: Request) {
 
     response.cookies.set("kasatoken", token, {
         httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/",
+    });
+
+    /*
+    response.cookies.set("kasatoken", token, {
+        httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         path: "/",
-    })
+    }) */
 
 
     return response
