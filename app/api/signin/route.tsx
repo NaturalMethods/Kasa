@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server"
 import {apiRequest, createErrorResponse} from "@/app/api/api"
+import {setTokenFromCookie} from "@/utils/utilsServer";
 
 export async function POST(req: Request) {
 
@@ -21,23 +21,6 @@ export async function POST(req: Request) {
     const token = data.token
     const user = data.user
 
-    const response = NextResponse.json({user})
+    return setTokenFromCookie(user,token)
 
-    response.cookies.set("kasatoken", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        path: "/",
-    });
-
-    /*
-    response.cookies.set("kasatoken", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/",
-    })*/
-
-
-    return response
 }

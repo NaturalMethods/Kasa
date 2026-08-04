@@ -15,17 +15,21 @@ export default function UserProvider({ children }: UserProviderProps) {
 
     useEffect(() => {
         async function loadUser() {
-            try {
-                const response = await getCurrentUser()
+            if(document.cookie.includes("hasSession=true")) {
+                try {
 
-                if (response.ok) {
-                    const data = await response.json()
-                    setUser(data)
+
+                    const response = await getCurrentUser()
+
+                    if (response.ok) {
+                        const data = await response.json()
+                        setUser(data)
+                    }
+                } catch (error) {
+                    console.error("Erreur récupération utilisateur :", error)
+                } finally {
+                    setLoadingUser(false)
                 }
-            } catch (error) {
-                console.error("Erreur récupération utilisateur :", error)
-            } finally {
-                setLoadingUser(false)
             }
         }
 
