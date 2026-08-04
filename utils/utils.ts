@@ -20,11 +20,15 @@ export function formatImageUrl(image?: string) {
         return "/icons/ImgNotFound.svg";
     }
 
-    // image S3
+    if (image.startsWith("/api/")) {
+        return image;
+    }
+
     if (image.startsWith("https://")) {
         return `/api/images/${encodeURIComponent(image)}`;
     }
 
-    // image backend
-    return `/api/uploads/image/${image}`;
+    const filename = image.replace(/^\/uploads\//, "");
+
+    return `/api/uploads/image/${filename}`;
 }
