@@ -1,12 +1,10 @@
-const BASE_URL = process.env.NEXT_PUBLIC_IP
 
 export async function request(
     path: string,
     options: RequestInit
 ) {
     try {
-        console.log("path:", path , "url:", BASE_URL)
-        return await fetch(`${BASE_URL}${path}`, {
+        return await fetch(`${path}`, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -28,7 +26,7 @@ export async function requestMultipart(
     options: RequestInit
 ) {
     try {
-        return await fetch(`${BASE_URL}${path}`, {
+        return await fetch(`${path}`, {
             ...options,
         });
 

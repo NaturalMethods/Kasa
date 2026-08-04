@@ -34,6 +34,8 @@ export async function proxy(req: NextRequest) {
     }
 }
 
+// TODO Autorisé le home et
+
 export const config = {
     matcher: [
         "/",
