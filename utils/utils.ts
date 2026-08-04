@@ -14,6 +14,8 @@
 */
 export function formatImageUrl(image?: string) {
 
+    console.log("sur le chemin:",image);
+
     if (!image) {
         return "/icons/ImgNotFound.svg";
     }

@@ -4,8 +4,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     try {
-
-        //TODO ajouter une sécurité en prenant une bibliothèque qui va lire le magic bytes
         const formData = await request.formData();
 
         const files = formData.getAll("file");

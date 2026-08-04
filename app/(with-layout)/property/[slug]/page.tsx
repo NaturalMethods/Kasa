@@ -114,7 +114,6 @@ export default function PropertyPage({ params }: PropertyPageProps){
                     <div className={"flex flex-col gap-8"}>
 
                         <div className="w-full flex flex-col gap-4">
-                            { /* TODO Peut être rajouter le bouton pour ajouter en favoris */}
                             <h4 className={"text-[24px]"}>{property?.title}</h4>
 
                             <div className={"flex flex-row gap-2"}>
