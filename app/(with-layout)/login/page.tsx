@@ -90,7 +90,7 @@ export default function Login() {
 
 return(
 
-    <form className={"lg:w-185.5 mr-4 ml-4 pt-8 pb-8 sm:p-20 w-fit mt-10 bg-white gap-9.5 rounded-[10px] flex flex-col items-center justify-center border border-lightGrey"}
+    <form className={"lg:w-185.5 mr-4 ml-4 mb-4 pt-8 pb-8 sm:p-20 w-fit mt-10 bg-white gap-9.5 rounded-[10px] flex flex-col items-center justify-center border border-lightGrey"}
           onSubmit={handleSubmit}
     >
         <div className="flex flex-col items-center justify-center p-2">

@@ -138,9 +138,6 @@ export default function NewProperty(){
                 hostPicture: hostPicFile,
             });
 
-            console.log("Images uploadées :", uploadedImages);
-
-
             // Vérification que tous les uploads attendus sont présents
             const hasCover = uploadedImages.some(
                 (upload) => upload.purpose === "property-cover"

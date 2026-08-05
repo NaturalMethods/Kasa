@@ -61,7 +61,7 @@ export default function Header() {
                     </Link>
 
                     <Link
-                        className="font-inter text-[14px] font-normal"
+                        className="font-inter text-[14px] font-normal whitespace-nowrap"
                         href="/about"
                     >
                         À propos
@@ -82,7 +82,7 @@ export default function Header() {
                 <div className="flex flex-row gap-7 items-center">
 
                     <Link
-                        className="font-inter text-[14px] font-normal text-mainRed"
+                        className="font-inter text-[14px] font-normal text-mainRed whitespace-nowrap"
                         href="/property/new"
                     >
                         +Ajouter un logement

@@ -7,6 +7,7 @@ export async function POST() {
     })
 
     response.cookies.delete("kasatoken")
+    response.cookies.delete("hasSession")
 
     return response
 }

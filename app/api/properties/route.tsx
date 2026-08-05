@@ -4,10 +4,7 @@ import {NextResponse} from "next/server";
 
 
 export async function GET() {
-
-    const token = await getTokenFromCookie()
-
-    const data2 = await apiFetch("/api/properties", "GET", token)
+    const data2 = await apiFetch("/api/properties", "GET")
 
     return NextResponse.json(await data2.json(), { status: data2.status })
 

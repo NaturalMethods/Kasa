@@ -6,8 +6,6 @@ export async function GET() {
     try {
         const token = await getTokenFromCookie();
 
-        console.log("Token :", token);
-
         if (!token) {
             return NextResponse.json(
                 { error: "Utilisateur non authentifié" },

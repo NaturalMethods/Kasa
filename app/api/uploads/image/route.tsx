@@ -9,8 +9,6 @@ export async function POST(request: Request) {
         const files = formData.getAll("file");
         const purpose = formData.get("purpose");
 
-        console.log("files:", files);
-
         if (files.length === 0) {
             return createErrorResponse(400, "Aucun fichier envoyé");
         }
@@ -81,8 +79,6 @@ export async function DELETE(request: Request) {
         const body = await request.json();
 
         const { filenames } = body;
-
-        console.log("filename:",filenames);
 
         if (!Array.isArray(filenames) || filenames.length === 0) {
             return createErrorResponse(

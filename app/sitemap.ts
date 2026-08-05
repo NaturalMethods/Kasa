@@ -1,20 +1,24 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next"
+import { getProperties } from "@/services/properties.service"
+import { PropertyBase } from "@/types/Property"
 
-const BASE_URL = "https://ton-domaine.com";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const baseUrl = "https://arcae.fr"
 
-export default function sitemap(): MetadataRoute.Sitemap {
+    const response = await getProperties()
+    const properties: PropertyBase[] = await response.json()
+
     return [
         {
-            url: `${BASE_URL}/login`,
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.5,
+            url: baseUrl,
+            changeFrequency: "daily" as const,
+            priority: 1,
         },
-        {
-            url: `${BASE_URL}/register`,
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.5,
-        },
-    ];
+
+        ...properties.map((property) => ({
+            url: `${baseUrl}/property/${property.slug}`,
+            changeFrequency: "weekly" as const,
+            priority: 0.8,
+        })),
+    ]
 }

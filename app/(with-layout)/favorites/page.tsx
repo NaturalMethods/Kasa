@@ -20,8 +20,6 @@ export default function Favorites(){
         async function getListOfFavorites() {
             setLoading(true);
 
-            console.log("getListOfFavorites:",user?.id);
-
             if(!user?.id) return
             try {
                 const response = await getFavorites(user?.id);
@@ -42,7 +40,6 @@ export default function Favorites(){
 
     useEffect(() => {
 
-        console.log("Favorites:",favorites);
     },[favorites]);
 
     return(

@@ -6,16 +6,11 @@ const ALLOWED_REMOTE_HOSTS = [
 
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10 Mo
 
-export async function GET(
-    request: Request,
-    {
-        params,
-    }: {
-        params: Promise<{ remote: string[] }>;
-    }
-) {
+export async function GET(request: Request, {params,}: { params: Promise<{ remote: string[] }>; }) {
+    console.log("remote:")
     try {
         const { remote } = await params;
+        console.log("remote:", remote);
 
         if (!remote?.length) {
             return NextResponse.json(
@@ -24,13 +19,16 @@ export async function GET(
             );
         }
 
+
         const remoteUrl = decodeURIComponent(remote.join("/"));
+        console.log("remoteUrl:", remoteUrl);
 
         let parsedUrl: URL;
 
         try {
             parsedUrl = new URL(remoteUrl);
         } catch {
+            console.log("Jusqu'dedans")
             return NextResponse.json(
                 { error: "URL invalide" },
                 { status: 400 }

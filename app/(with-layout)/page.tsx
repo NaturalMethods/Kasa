@@ -18,7 +18,6 @@ export default function Home() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        console.log("useEffect user:", user);
 
         async function loadData() {
             setLoading(true);
@@ -26,20 +25,14 @@ export default function Home() {
             try {
                 const response = await getProperties();
                 const data = await response.json();
-
                 setProperties(data);
 
-                console.log("user avant favoris:", user);
-
                 if (!user?.id) {
-                    console.log("Pas d'id user, abandon favoris");
                     return;
                 }
 
                 const favResponse = await getFavorites(user.id);
                 const favData = await favResponse.json();
-
-                console.log("favoris reçus:", favData);
 
                 setFavorites(favData);
 
@@ -87,7 +80,7 @@ export default function Home() {
 
 
 
-          <div className="bg-white flex flex-col gap-10 items-center justify-center rounded-[10px] pt-10 lg:p-10 pl-2 pr-2">
+          <div className="bg-white flex flex-col gap-10 items-center justify-center rounded-[10px] pt-10 lg:p-10 pb-10 pl-2 pr-2">
               <div className="flex flex-col gap-4">
                   <h2 className={"text-black font-semibold text-[24px]"}>Comment ça marche ?</h2>
                   <p className={"text-center whitespace-pre-line"}>{"Que vous partiez pour un week-end improvisé, des vacances en famille ou un voyage professionnel,\n Kasa vous aide à trouver un lieu qui vous ressemble."}</p>
