@@ -2,14 +2,22 @@ import {cookies} from "next/headers";
 import {NextResponse} from "next/server";
 import {User} from "@/types/User";
 
-export async function getTokenFromCookie(){
+/**
+ * Get the token from the cookie from the client
+ */
+export async function getTokenFromCookie() {
 
     const cookieStore = await cookies()
     return cookieStore.get("kasatoken")?.value
 
 }
 
-export async function setTokenFromCookie(user:User,token:string){
+/**
+ * Set the cookie in client, (secure= to be use with https)
+ * @param user
+ * @param token
+ */
+export async function setTokenFromCookie(user: User, token: string) {
 
     const response = NextResponse.json({user})
 

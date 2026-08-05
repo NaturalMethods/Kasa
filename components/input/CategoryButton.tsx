@@ -1,4 +1,3 @@
-
 interface CategoryButtonProps {
 
     text?: string;
@@ -6,9 +5,17 @@ interface CategoryButtonProps {
     active?: boolean;
 }
 
-export function CategoryButton({text,onClick,active}: CategoryButtonProps) {
+/**
+ * Clickable button to select a category in the category form
+ * @param param0
+ * @param param0.text
+ * @param param0.onClick
+ * @param param0.active
+ * @constructor
+ */
+export function CategoryButton({text, onClick, active}: CategoryButtonProps) {
 
-    return(
+    return (
 
         <button
             type="button"

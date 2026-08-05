@@ -19,61 +19,70 @@ interface PropertyPageProps {
     }>;
 }
 
+/**
+ * Content of one property page with url (id-slug)
+ * @param param0
+ * @param param0.params
+ * @constructor
+ */
+export default function PropertyPage({params}: PropertyPageProps) {
 
-export default function PropertyPage({ params }: PropertyPageProps){
-
-    const [property,setProperty] = useState<PropertyDetail>()
+    const [property, setProperty] = useState<PropertyDetail>()
     const [isLoading, setLoading] = useState<boolean>(true);
 
     const router = useRouter();
 
-    useEffect(()=>{
-    async function getPropertyBySlug() {
+    useEffect(() => {
+        /**
+         * Try to get property by his ID or redirect to 404 page not found
+         */
+        async function getPropertyBySlug() {
 
-        setLoading(true);
+            setLoading(true);
 
-        try {
-            const {slug} = await params;
-            const propertyId = slug.split("-")[0];
+            try {
+                const {slug} = await params;
+                const propertyId = slug.split("-")[0];
 
-            const response = await getProperty(propertyId)
+                const response = await getProperty(propertyId)
 
-            const propertyTemp: PropertyDetail = await response.json()
+                const propertyTemp: PropertyDetail = await response.json()
 
-            if (response.status === 404 || !response.ok) {
-                router.push("/not-found");
-                router.refresh()
-                return
+                if (response.status === 404 || !response.ok) {
+                    router.push("/not-found");
+                    router.refresh()
+                    return
+                }
+
+                const property = {
+                    ...propertyTemp,
+                    cover: formatImageUrl(propertyTemp.cover) || "/icons/ImgNotFound.svg",
+                    pictures: propertyTemp.pictures.map(formatImageUrl),
+                    host: propertyTemp.host
+                        ? {
+                            ...propertyTemp.host,
+                            picture: formatImageUrl(propertyTemp.host.picture),
+                        }
+                        : propertyTemp.host,
+                };
+
+                setProperty(property);
+                console.log(property.cover);
+            } catch (e) {
+                console.log(e)
+            } finally {
+                setTimeout(() => {
+                    setLoading(false);
+                }, 800);
             }
 
-            const property = {
-                ...propertyTemp,
-                cover: formatImageUrl(propertyTemp.cover) || "/icons/ImgNotFound.svg",
-                pictures: propertyTemp.pictures.map(formatImageUrl),
-                host: propertyTemp.host
-                    ? {
-                        ...propertyTemp.host,
-                        picture: formatImageUrl(propertyTemp.host.picture),
-                    }
-                    : propertyTemp.host,
-            };
-
-            setProperty(property);
-            console.log(property.cover);
-        }catch(e){
-            console.log(e)
-        }finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 800);
         }
 
-    }
-    getPropertyBySlug()
+        getPropertyBySlug()
 
-    },[])
+    }, [])
 
-    return(
+    return (
         <LoadingSpinner loading={isLoading}>
 
             <section className={" lg:w-242.5 lg:max-w-242.5 pt-10 pb-10 pl-4 pr-4 lg:pl-0 lg:pr-0 flex flex-col gap-6"}>
@@ -94,18 +103,22 @@ export default function PropertyPage({ params }: PropertyPageProps){
                     <div className="flex flex-row lg:flex-col gap-2">
 
                         <div className={"flex flex-row gap-2"}>
-                            <SidePicture pictureTitle={property?.title ?? "Tite d'image"} pictureUrl={property?.pictures[1]}/>
-                            <SidePicture pictureTitle={property?.title ?? "Tite d'image"} pictureUrl={property?.pictures[2]}/>
+                            <SidePicture pictureTitle={property?.title ?? "Tite d'image"}
+                                         pictureUrl={property?.pictures[1]}/>
+                            <SidePicture pictureTitle={property?.title ?? "Tite d'image"}
+                                         pictureUrl={property?.pictures[2]}/>
                         </div>
 
                         <div className={"flex flex-row gap-2"}>
-                            <SidePicture pictureTitle={property?.title ?? "Tite d'image"} pictureUrl={property?.pictures[3]}/>
-                            <SidePicture pictureTitle={property?.title ?? "Tite d'image"} pictureUrl={property?.pictures[4]}/>
+                            <SidePicture pictureTitle={property?.title ?? "Tite d'image"}
+                                         pictureUrl={property?.pictures[3]}/>
+                            <SidePicture pictureTitle={property?.title ?? "Tite d'image"}
+                                         pictureUrl={property?.pictures[4]}/>
                         </div>
 
                     </div>
                     <div className={"hidden lg:block"}>
-                        <HostCard property={property} />
+                        <HostCard property={property}/>
                     </div>
                 </div>
 
@@ -157,7 +170,7 @@ export default function PropertyPage({ params }: PropertyPageProps){
 
                 </div>
                 <div className={"lg:hidden"}>
-                    <HostCard property={property} />
+                    <HostCard property={property}/>
                 </div>
 
             </section>

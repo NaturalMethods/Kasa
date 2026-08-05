@@ -2,14 +2,22 @@ import {getTokenFromCookie} from "@/utils/utilsServer";
 import {apiFetch, createErrorResponse} from "@/app/api/api";
 import {NextResponse} from "next/server";
 
-
+/**
+ * Get all properties
+ * @constructor
+ */
 export async function GET() {
     const data2 = await apiFetch("/api/properties", "GET")
 
-    return NextResponse.json(await data2.json(), { status: data2.status })
+    return NextResponse.json(await data2.json(), {status: data2.status})
 
 }
 
+/**
+ * Create a new property
+ * @param request
+ * @constructor
+ */
 export async function POST(request: Request) {
 
     try {

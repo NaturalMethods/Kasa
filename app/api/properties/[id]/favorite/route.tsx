@@ -2,6 +2,12 @@ import {apiFetch, createErrorResponse} from "@/app/api/api";
 import {NextResponse} from "next/server";
 import {getTokenFromCookie} from "@/utils/utilsServer";
 
+/**
+ * Add a favorite property to a user
+ * @param request
+ * @param context
+ * @constructor
+ */
 export async function POST(request: Request,
                            context: { params: Promise<{ id: string }> }) {
 
@@ -15,15 +21,21 @@ export async function POST(request: Request,
     const data = await res.json()
 
     //If response is not a success, return an error response
-    if(res.status !== 200) {
+    if (res.status !== 200) {
         return createErrorResponse(res.status, data.error)
     }
 
-    return NextResponse.json(await data, { status: data.status })
+    return NextResponse.json(await data, {status: data.status})
 }
 
+/**
+ * Delete a favorite property to a user
+ * @param request
+ * @param context
+ * @constructor
+ */
 export async function DELETE(request: Request,
-                           context: { params: Promise<{ id: string }> }) {
+                             context: { params: Promise<{ id: string }> }) {
 
     const {id} = await context.params
 
@@ -35,9 +47,9 @@ export async function DELETE(request: Request,
     const data = await res.json()
 
     //If response is not a success, return an error response
-    if(res.status !== 200) {
+    if (res.status !== 200) {
         return createErrorResponse(res.status, data.error)
     }
 
-    return NextResponse.json(await data, { status: data.status })
+    return NextResponse.json(await data, {status: data.status})
 }

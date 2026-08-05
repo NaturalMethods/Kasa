@@ -1,62 +1,67 @@
 @import "tailwindcss";
 
 @layer base {
-  body {
-    font-synthesis: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+    body {
+        font-synthesis: none;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-  h1 {
-    @apply text-center font-black leading-[143%];
+    h1 {
+        @apply text-center font-black leading-[143%];
 
-    font-family: Inter, sans-serif;
-    font-size: 100px;
-    letter-spacing: 0;
-  }
-  h2 {
-    @apply text-[32px] font-bold leading-[143%] text-center;
-    font-family: Inter, sans-serif;
-    letter-spacing: 0;
-  }
-  h3 {
-    @apply text-[18px] font-bold leading-[143%];
-    font-family: Inter, sans-serif;
-    letter-spacing: 0;
-  }
-  h4{
-    @apply text-[14px] font-medium leading-[143%];
-    font-family: Inter, sans-serif;
-    letter-spacing: 0;
-  }
-  p {
-    @apply text-[14px] font-normal leading-[143%] ;
-    font-family: Inter, sans-serif;
-    letter-spacing: 0;
-  }
+        font-family: Inter, sans-serif;
+        font-size: 100px;
+        letter-spacing: 0;
+    }
+
+    h2 {
+        @apply text-[32px] font-bold leading-[143%] text-center;
+        font-family: Inter, sans-serif;
+        letter-spacing: 0;
+    }
+
+    h3 {
+        @apply text-[18px] font-bold leading-[143%];
+        font-family: Inter, sans-serif;
+        letter-spacing: 0;
+    }
+
+    h4 {
+        @apply text-[14px] font-medium leading-[143%];
+        font-family: Inter, sans-serif;
+        letter-spacing: 0;
+    }
+
+    p {
+        @apply text-[14px] font-normal leading-[143%] ;
+        font-family: Inter, sans-serif;
+        letter-spacing: 0;
+    }
 }
 
 @layer components {
-  .font-inter {
-    font-family: Inter, sans-serif;
-    font-weight: 500;
-    line-height: 143%;
-    letter-spacing: 0;
-  }
-  .text-body-medium {
-    @apply text-[18px] font-medium leading-[143%];
-    font-family: Inter, sans-serif;
-    letter-spacing: 0;
-  }
+    .font-inter {
+        font-family: Inter, sans-serif;
+        font-weight: 500;
+        line-height: 143%;
+        letter-spacing: 0;
+    }
+
+    .text-body-medium {
+        @apply text-[18px] font-medium leading-[143%];
+        font-family: Inter, sans-serif;
+        letter-spacing: 0;
+    }
 }
 
 @theme{
-  --color-mainRed:  #99331A;
-  --color-darkOrange: #842C16;
-  --color-lightOrange: #FFFBF9;
-  --color-black: #0D0D0D;
-  --color-white: #FFFFFF;
-  --color-lightGrey: #F5F5F5;
-  --color-darkGrey: #565656;
+    --color-mainRed: #99331A;
+    --color-darkOrange: #842C16;
+    --color-lightOrange: #FFFBF9;
+    --color-black: #0D0D0D;
+    --color-white: #FFFFFF;
+    --color-lightGrey: #F5F5F5;
+    --color-darkGrey: #565656;
 }
 

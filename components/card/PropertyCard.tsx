@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PropertyBase } from "@/types/Property";
+import {PropertyBase} from "@/types/Property";
 import {addFavorite, removeFavorite} from "@/services/properties.service";
 import {useEffect, useState} from "react";
 import {formatImageUrl} from "@/utils/utils";
@@ -11,7 +11,14 @@ interface PropertyCardProps {
     onFavoriteClick?: (property: PropertyBase) => void;
 }
 
-export function PropertyCard({ property, favorite = false}: PropertyCardProps) {
+/**
+ * Card which display the résumé of a property and is clickable
+ * @param param0
+ * @param param0.property
+ * @param param0.favorite
+ * @constructor
+ */
+export function PropertyCard({property, favorite = false}: PropertyCardProps) {
 
     const [isFavorite, setIsFavorite] = useState(favorite);
 
@@ -19,6 +26,9 @@ export function PropertyCard({ property, favorite = false}: PropertyCardProps) {
         setIsFavorite(favorite);
     }, [favorite]);
 
+    /**
+     * Set the color of the favorite icon
+     */
     async function handleFavorite() {
 
         if (isFavorite) {

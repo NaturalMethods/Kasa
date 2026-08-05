@@ -6,18 +6,27 @@ interface PropertyPicsFormProps {
     setPropertyCoverFile: (file: File | null) => void;
 
     propertyPicturesFile: (File | null)[];
-    setPropertyPicturesFile: (files: (File|null)[]) => void;
+    setPropertyPicturesFile: (files: (File | null)[]) => void;
 
     errorCover?: boolean;
     errorPictures?: boolean;
 }
 
-export function PropertyPicsForm({ setPropertyCoverFile,
-                                  propertyPicturesFile,setPropertyPicturesFile,
-                                  errorCover = false, errorPictures = false
-}: PropertyPicsFormProps)
-
-{
+/**
+ * Form with multiplie input pic to get all images for a property
+ * @param param0
+ * @param param0.setPropertyCoverFile
+ * @param param0.propertyPicturesFile
+ * @param param0.setPropertyPicturesFile
+ * @param param0.errorCover
+ * @param param0.errorPictures
+ * @constructor
+ */
+export function PropertyPicsForm({
+                                     setPropertyCoverFile,
+                                     propertyPicturesFile, setPropertyPicturesFile,
+                                     errorCover = false, errorPictures = false
+                                 }: PropertyPicsFormProps) {
     function addPictureField() {
         if (propertyPicturesFile.length < 4) {
             setPropertyPicturesFile([
@@ -35,7 +44,7 @@ export function PropertyPicsForm({ setPropertyCoverFile,
         setPropertyPicturesFile(newFiles);
     }
 
-    return(
+    return (
 
         <div className={"flex flex-col lg:pb-12 lg:pt-12 lg:pl-20 lg:pr-20 p-4 bg-white rounded-[10px] gap-4"}>
 

@@ -1,18 +1,25 @@
-import { getTokenFromCookie } from "@/utils/utilsServer";
-import { apiFileFetch } from "@/app/api/api";
-import { NextResponse } from "next/server";
+import {getTokenFromCookie} from "@/utils/utilsServer";
+import {apiFileFetch} from "@/app/api/api";
+import {NextResponse} from "next/server";
 
+/**
+ * Get an image from the public of the backend server
+ * @param request
+ * @param param1
+ * @param param1.params
+ * @constructor
+ */
 export async function GET(
     request: Request,
-    { params }: { params: Promise<{ filename: string }> }
+    {params}: { params: Promise<{ filename: string }> }
 ) {
     try {
-        const { filename } = await params;
+        const {filename} = await params;
 
         if (!filename) {
             return NextResponse.json(
-                { error: "Nom du fichier manquant" },
-                { status: 400 }
+                {error: "Nom du fichier manquant"},
+                {status: 400}
             );
         }
 
@@ -23,16 +30,16 @@ export async function GET(
             filename.includes("\\")
         ) {
             return NextResponse.json(
-                { error: "Nom de fichier invalide" },
-                { status: 400 }
+                {error: "Nom de fichier invalide"},
+                {status: 400}
             );
         }
 
         // Taille raisonnable du nom
         if (filename.length > 255) {
             return NextResponse.json(
-                { error: "Nom de fichier trop long" },
-                { status: 400 }
+                {error: "Nom de fichier trop long"},
+                {status: 400}
             );
         }
 
@@ -48,8 +55,8 @@ export async function GET(
 
         if (!extension || !allowedExtensions.includes(extension)) {
             return NextResponse.json(
-                { error: "Extension d'image invalide" },
-                { status: 400 }
+                {error: "Extension d'image invalide"},
+                {status: 400}
             );
         }
 
@@ -63,8 +70,8 @@ export async function GET(
 
         if (!res.ok) {
             return NextResponse.json(
-                { error: "Image introuvable" },
-                { status: res.status }
+                {error: "Image introuvable"},
+                {status: res.status}
             );
         }
 
@@ -85,8 +92,8 @@ export async function GET(
         console.error("Get image error:", error);
 
         return NextResponse.json(
-            { error: "Erreur lors de la récupération de l'image" },
-            { status: 500 }
+            {error: "Erreur lors de la récupération de l'image"},
+            {status: 500}
         );
     }
 }

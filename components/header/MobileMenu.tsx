@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 
 interface MobileMenuProps {
     isMenuOpen: boolean,
@@ -65,6 +65,13 @@ function MobileLink({text, toLink, setIsMenuOpen}: MobileLinkProps) {
 
 }
 
+/**
+ * Display the mobile menu
+ * @param param0
+ * @param param0.isMenuOpen
+ * @param param0.setIsMenuOpen
+ * @constructor
+ */
 export function MobileMenu({isMenuOpen, setIsMenuOpen}: MobileMenuProps) {
 
     const router = useRouter();

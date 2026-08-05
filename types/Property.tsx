@@ -1,6 +1,9 @@
 import {User} from "@/types/User";
 
-export interface PropertyBase{
+/**
+ * Describe a light version of a property
+ */
+export interface PropertyBase {
     id: string;
     slug?: string;
     title: string;
@@ -13,6 +16,10 @@ export interface PropertyBase{
     host?: User
 
 }
+
+/**
+ * Describe a detailed version of a property
+ */
 export interface PropertyDetail extends PropertyBase {
     pictures: string[];
     equipments: string[];

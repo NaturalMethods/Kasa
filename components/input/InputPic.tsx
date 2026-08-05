@@ -1,8 +1,8 @@
 "use client"
 
 import React, {useRef, useState} from "react";
-import { MainRedButton } from "@/components/input/MainRedButton";
-import { InputField } from "@/components/input/InputField";
+import {MainRedButton} from "@/components/input/MainRedButton";
+import {InputField} from "@/components/input/InputField";
 
 interface InputPicProps {
     name: string;
@@ -11,6 +11,15 @@ interface InputPicProps {
     error?: boolean;
 }
 
+/**
+ * Field that display the name of an image that is selected to be uploaded
+ * @param param0
+ * @param param0.name
+ * @param param0.id
+ * @param param0.setFile
+ * @param param0.error
+ * @constructor
+ */
 export function InputPic({
                              name,
                              id,

@@ -8,7 +8,11 @@ import {useUser} from "@/contexts/useUser";
 import {LoadingSpinner} from "@/components/input/LoadingSpinner";
 
 
-export default function Favorites(){
+/**
+ * Content of the favorites page
+ * @constructor
+ */
+export default function Favorites() {
 
     const {user} = useUser()
 
@@ -17,10 +21,13 @@ export default function Favorites(){
 
     useEffect(() => {
 
+        /**
+         * Get favorites if the user is defined
+         */
         async function getListOfFavorites() {
             setLoading(true);
 
-            if(!user?.id) return
+            if (!user?.id) return
             try {
                 const response = await getFavorites(user?.id);
                 const data = await response.json();
@@ -40,9 +47,9 @@ export default function Favorites(){
 
     useEffect(() => {
 
-    },[favorites]);
+    }, [favorites]);
 
-    return(
+    return (
 
         <section className={" max-w-278.75 pt-10 pb-10 pl-4 pr-4 lg:pl-0 lg:pr-0 flex flex-col gap-6"}>
 

@@ -1,4 +1,8 @@
-
+/**
+ * Create a request fetch that will be sent to the server (BFF)
+ * @param path
+ * @param options
+ */
 export async function request(
     path: string,
     options: RequestInit
@@ -11,16 +15,24 @@ export async function request(
             ...options,
         })
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    }catch (e) {
+    } catch (e) {
 
         return Response.json(
-            {   success: false,
-                error: "Server unreachable" },
-            { status: 503 }
+            {
+                success: false,
+                error: "Server unreachable"
+            },
+            {status: 503}
         )
 
     }
 }
+
+/**
+ * Create a request for file that will be sent to server
+ * @param path
+ * @param options
+ */
 export async function requestMultipart(
     path: string,
     options: RequestInit
@@ -45,7 +57,12 @@ export async function requestMultipart(
     }
 }
 
-
+/**
+ * Fill the request that will be sent to the server
+ * @param url
+ * @param method
+ * @param body
+ */
 export function requestFetch(
     url: string,
     method: string,
@@ -66,6 +83,12 @@ export function requestFetch(
     })
 }
 
+/**
+ * Fill the file request that will be sent to the server
+ * @param url
+ * @param method
+ * @param body
+ */
 export function requestFileFetch(
     url: string,
     method: string,

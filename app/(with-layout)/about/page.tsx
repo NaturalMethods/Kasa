@@ -4,9 +4,13 @@ export const metadata = {
     title: "À propos",
 };
 
-export default function About(){
+/**
+ * Content of the About page
+ * @constructor
+ */
+export default function About() {
 
-    return(
+    return (
 
         <section className={"flex flex-col pl-6 pr-6 lg:pl-40 lg:pr-40 gap-10 pt-10 pb-10"}>
 
@@ -53,7 +57,9 @@ export default function About(){
                         </div>
 
                         <p className="text-body-medium text-mainRed">
-                            Que vous cherchiez un appartement cosy en centre-ville, une maison en bord de mer ou un chalet à la montagne, Kasa vous accompagne pour que chaque séjour devienne un souvenir inoubliable.
+                            Que vous cherchiez un appartement cosy en centre-ville, une maison en bord de mer ou un
+                            chalet à la montagne, Kasa vous accompagne pour que chaque séjour devienne un souvenir
+                            inoubliable.
                         </p>
                     </div>
                 </div>

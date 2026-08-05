@@ -1,7 +1,12 @@
-import { getTokenFromCookie } from "@/utils/utilsServer";
+import {getTokenFromCookie} from "@/utils/utilsServer";
 import {apiFetch, apiFileFetch, createErrorResponse} from "@/app/api/api";
-import { NextResponse } from "next/server";
+import {NextResponse} from "next/server";
 
+/**
+ * Upload an image to the backend server after validation
+ * @param request
+ * @constructor
+ */
 export async function POST(request: Request) {
     try {
         const formData = await request.formData();
@@ -68,17 +73,21 @@ export async function POST(request: Request) {
 
         return createErrorResponse(
             500,
-            "Erreur lors de l'upload de l'image"
+            "Erreur lors du téléversement de l'image"
         );
     }
 }
 
-
+/**
+ * Delete an image in the public of the backend
+ * @param request
+ * @constructor
+ */
 export async function DELETE(request: Request) {
     try {
         const body = await request.json();
 
-        const { filenames } = body;
+        const {filenames} = body;
 
         if (!Array.isArray(filenames) || filenames.length === 0) {
             return createErrorResponse(

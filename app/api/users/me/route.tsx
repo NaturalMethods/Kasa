@@ -1,15 +1,19 @@
-import { getTokenFromCookie } from "@/utils/utilsServer";
-import { apiFetch } from "@/app/api/api";
-import { NextResponse } from "next/server";
+import {getTokenFromCookie} from "@/utils/utilsServer";
+import {apiFetch} from "@/app/api/api";
+import {NextResponse} from "next/server";
 
+/**
+ * Get the id of the user by its token and return the user from the backend
+ * @constructor
+ */
 export async function GET() {
     try {
         const token = await getTokenFromCookie();
 
         if (!token) {
             return NextResponse.json(
-                { error: "Utilisateur non authentifié" },
-                { status: 401 }
+                {error: "Utilisateur non authentifié"},
+                {status: 401}
             );
         }
 
@@ -22,11 +26,10 @@ export async function GET() {
 
         if (!userId) {
             return NextResponse.json(
-                { error: "Id utilisateur introuvable dans le token" },
-                { status: 401 }
+                {error: "Id utilisateur introuvable dans le token"},
+                {status: 401}
             );
         }
-
 
 
         const res = await apiFetch(
@@ -39,8 +42,8 @@ export async function GET() {
 
         if (!res.ok) {
             return NextResponse.json(
-                { error: data.error ?? "Erreur récupération utilisateur" },
-                { status: res.status }
+                {error: data.error ?? "Erreur récupération utilisateur"},
+                {status: res.status}
             );
         }
 
@@ -52,8 +55,8 @@ export async function GET() {
         console.error("Get current user error:", error);
 
         return NextResponse.json(
-            { error: "Erreur lors de la récupération utilisateur" },
-            { status: 500 }
+            {error: "Erreur lors de la récupération utilisateur"},
+            {status: 500}
         );
     }
 }

@@ -1,15 +1,22 @@
 "use client"
 
-import { useState } from "react";
-import { CategoryButton } from "@/components/input/CategoryButton";
-import { InputField } from "@/components/input/InputField";
-import { MainRedButton } from "@/components/input/MainRedButton";
+import {useState} from "react";
+import {CategoryButton} from "@/components/input/CategoryButton";
+import {InputField} from "@/components/input/InputField";
+import {MainRedButton} from "@/components/input/MainRedButton";
 
 interface CategoriesFormProps {
     selectedCategories: string[];
     setSelectedCategories: (categories: string[]) => void;
 }
 
+/**
+ * Form to select and a new category
+ * @param param0
+ * @param param0.selectedCategories
+ * @param param0.setSelectedCategories
+ * @constructor
+ */
 export function CategoriesForm({
                                    selectedCategories,
                                    setSelectedCategories,
@@ -28,7 +35,6 @@ export function CategoriesForm({
     ]);
 
     const [newCategory, setNewCategory] = useState("");
-
 
     function toggleCategory(category: string) {
 
@@ -49,7 +55,6 @@ export function CategoriesForm({
 
         }
     }
-
 
     function addCategory() {
 

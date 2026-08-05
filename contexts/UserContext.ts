@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import {createContext} from "react"
 import {User} from "@/types/User";
 
 interface UserContextValue {
@@ -7,4 +7,7 @@ interface UserContextValue {
     loadingUser: boolean
 }
 
+/**
+ * Context containing the current user
+ */
 export const UserContext = createContext<UserContextValue | null>(null)

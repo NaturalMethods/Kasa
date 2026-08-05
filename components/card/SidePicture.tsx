@@ -7,9 +7,16 @@ interface SidePictureProps {
     pictureUrl?: string;
 }
 
-export function SidePicture({ pictureTitle, pictureUrl}: SidePictureProps) {
+/**
+ * Little pictures on the right side of the cover in the property detail page
+ * @param param0
+ * @param param0.pictureTitle
+ * @param param0.pictureUrl
+ * @constructor
+ */
+export function SidePicture({pictureTitle, pictureUrl}: SidePictureProps) {
 
-    return(
+    return (
         <PicLightBox
             src={pictureUrl || "/icons/ImgNotFound.svg"}
             alt={pictureTitle}

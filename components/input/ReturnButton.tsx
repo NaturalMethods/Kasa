@@ -8,9 +8,15 @@ interface ReturnButtonProps {
 
 }
 
+/**
+ * Button to return to the homepage
+ * @param param0
+ * @param param0.text
+ * @constructor
+ */
 export function ReturnButton({text}: ReturnButtonProps) {
 
-    return(
+    return (
 
         <Link
             href="/"

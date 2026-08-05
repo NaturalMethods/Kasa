@@ -8,11 +8,16 @@ interface SixGridProps {
     favorites?: PropertyBase[]
 }
 
-
+/**
+ * Grid to display 6 property card
+ * @param param0
+ * @param param0.properties
+ * @param param0.favorites
+ * @constructor
+ */
 export function SixGrid({properties, favorites = []}: SixGridProps) {
 
     useEffect(() => {
-
 
 
     }, [favorites]);

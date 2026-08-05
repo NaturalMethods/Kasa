@@ -2,6 +2,11 @@ import {requestFetch, requestFileFetch} from "@/services/request.service";
 
 
 //TODO si c'est un owner qui upload et supprime les images ?
+/**
+ * Send file (image only) to be uploaded to the backend
+ * @param file
+ * @param purpose
+ */
 export async function uploadImage(file: File, purpose: string) {
 
     const formData = new FormData();
@@ -12,6 +17,10 @@ export async function uploadImage(file: File, purpose: string) {
     return requestFileFetch("/api/uploads/image", "POST", formData);
 }
 
+/**
+ * Ask the server to delete image from the backend
+ * @param filenames
+ */
 export async function deleteImages(filenames: (string | undefined)[]) {
     return await requestFetch(
         "/api/uploads/image",
@@ -31,6 +40,13 @@ interface UploadPropertyImagesParams {
     hostPicture: File | null;
 }
 
+/**
+ * Upload multiple images for a new property to server and wait for all the response
+ * @param param0
+ * @param param0.cover
+ * @param param0.pictures
+ * @param param0.hostPicture
+ */
 export async function uploadPropertyImages({
                                                cover,
                                                pictures,

@@ -10,9 +10,18 @@ interface PicLightBoxProps {
     objectPosition?: string;
 }
 
+/**
+ * Box to display an image in the whole screen in the property detail page
+ * @param param0
+ * @param param0.src
+ * @param param0.alt
+ * @param param0.className
+ * @param param0.objectPosition
+ * @constructor
+ */
 export function PicLightBox({
-                                src ="/icons/ImgNotFound.svg",
-                                alt="Titre d'image",
+                                src = "/icons/ImgNotFound.svg",
+                                alt = "Titre d'image",
                                 className = "",
                                 objectPosition = "object-cover object-left",
                             }: PicLightBoxProps) {

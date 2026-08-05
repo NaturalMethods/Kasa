@@ -14,12 +14,19 @@ import {createProperty} from "@/services/properties.service";
 import {EquipmentsForm} from "@/components/input/EquipmentsForm";
 import {CategoriesForm} from "@/components/input/CategoriesForm";
 import {useRouter} from "next/navigation";
+import {getUrlImages, setPropertyImagesUploadErrors} from "@/utils/utils";
 
-
-export default function NewProperty(){
+/**
+ * Content of the NewProperty page
+ * @constructor
+ */
+export default function NewProperty() {
 
     const router = useRouter()
 
+    /**
+     * Create an empty shell to store datas from the form that will be send
+     */
     const [property, setProperty] = useState<PropertyDetail>({
         id: "",
         title: "",
@@ -35,21 +42,18 @@ export default function NewProperty(){
             name: "",
             email: "",
             role: "owner",
-            picture:"",
+            picture: "",
         },
     });
 
-    interface uploadedImg{
-
-        url:string,
-        purpose:string,
-
-    }
 
     const [propertyCoverFile, setPropertyCoverFile] = useState<File | null>(null);
     const [propertyPicturesFile, setPropertyPicturesFile] = useState<(File | null)[]>([null]);
     const [hostPicFile, setHostPicFile] = useState<File | null>(null);
 
+    /**
+     * Store which field is in error
+     */
     const [errors, setErrors] = useState<{
         title?: string;
         description?: string;
@@ -71,6 +75,10 @@ export default function NewProperty(){
         }));
     }
 
+    /**
+     * Send the new property to the server
+     * @param propertyPayload
+     */
     async function sendProperty(propertyPayload: PropertyDetail) {
 
         const response = await createProperty(propertyPayload);
@@ -85,31 +93,7 @@ export default function NewProperty(){
         router.refresh();
 
     }
-    function getUrlImages(uploadedImages:uploadedImg[]){
-        const cover = uploadedImages.find(
-            (upload) => upload.purpose === "property-cover"
-        )!.url;
 
-        const pictures = uploadedImages
-            .filter((upload) => upload.purpose === "property-picture")
-            .map((upload) => upload.url);
-
-        const hostPicture = uploadedImages.find(
-            (upload) => upload.purpose === "host-picture"
-        )!.url;
-
-        // 3 - Construction payload
-        return {
-            ...property,
-            cover,
-            pictures,
-            host: {
-                ...property.host!,
-                picture: hostPicture,
-            },
-        };
-
-    }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -131,14 +115,18 @@ export default function NewProperty(){
         let uploadedImages: { url: string; purpose: string }[] = [];
 
         try {
-            // 1 - Upload des images
+            /**
+             * Upload all images to the backend
+             */
             uploadedImages = await uploadPropertyImages({
                 cover: propertyCoverFile,
                 pictures: propertyPicturesFile,
                 hostPicture: hostPicFile,
             });
 
-            // Vérification que tous les uploads attendus sont présents
+            /**
+             * Check if all images are uploaded
+             */
             const hasCover = uploadedImages.some(
                 (upload) => upload.purpose === "property-cover"
             );
@@ -164,7 +152,10 @@ export default function NewProperty(){
                 throw new Error("hostPicture");
             }
 
-            const propertyPayload = getUrlImages(uploadedImages);
+            /**
+             * Set url of images in the property payload and send it
+             */
+            const propertyPayload = getUrlImages(property, uploadedImages);
 
             await sendProperty(propertyPayload);
 
@@ -174,6 +165,9 @@ export default function NewProperty(){
 
             if (uploadedImages.length > 0) {
                 try {
+                    /**
+                     * if an error occured during images upload, delete all images, to retry with a clean attempt
+                     */
                     await deleteImages(uploadedImages.map((image) => image.url));
                 } catch (deleteError) {
                     console.error(
@@ -183,35 +177,14 @@ export default function NewProperty(){
                 }
             }
 
-            if (error instanceof Error) {
-                if (error.message === "cover") {
-                    setErrors({
-                        cover: "L'image de couverture n'a pas pu être uploadée",
-                    });
-                }
-
-                if (error.message === "pictures") {
-                    setErrors({
-                        pictures: "Une ou plusieurs images n'ont pas pu être uploadées",
-                    });
-                }
-
-                if (error.message === "hostPicture") {
-                    setErrors({
-                        hostPicture: "La photo de profil de l'hôte n'a pas pu être uploadée",
-                    });
-                }
-            } else {
-                setErrors({
-                    pictures: "Une erreur est survenue lors de la création",
-                });
-            }
+            setPropertyImagesUploadErrors(error, setErrors);
         }
     }
-    return(
+
+    return (
 
         <form onSubmit={handleSubmit}
-            className={" lg:w-292 lg:max-w-278.75 pt-10 pb-10 pl-4 pr-4 lg:pl-0 lg:pr-0 flex flex-col gap-6"}>
+              className={" lg:w-292 lg:max-w-278.75 pt-10 pb-10 pl-4 pr-4 lg:pl-0 lg:pr-0 flex flex-col gap-6"}>
 
             <div className="w-full">
                 <ReturnButton text={"Retour"}/>
@@ -235,11 +208,11 @@ export default function NewProperty(){
                                 error={!!errors.title}
                     />
                     <InputArea name={"Description"}
-                                id={"propertyDesc"}
-                                value={property.description}
-                                setValue={(value) => updateProperty("description", value)}
-                                placeholder={"Décrivez votre propriété en détail..."}
-                                className={"font-normal text-[12px] text-darkGrey h-30"}
+                               id={"propertyDesc"}
+                               value={property.description}
+                               setValue={(value) => updateProperty("description", value)}
+                               placeholder={"Décrivez votre propriété en détail..."}
+                               className={"font-normal text-[12px] text-darkGrey h-30"}
                                error={!!errors.description}
                     />
                     {/* TODO Concaténer localisation + code postal */}
@@ -268,7 +241,8 @@ export default function NewProperty(){
                                       errorPictures={!!errors.pictures}
                     />
 
-                    <div className={"flex flex-col lg:pb-12 lg:pt-12 lg:pl-20 lg:pr-20 p-4 bg-white rounded-[10px] gap-4"}>
+                    <div
+                        className={"flex flex-col lg:pb-12 lg:pt-12 lg:pl-20 lg:pr-20 p-4 bg-white rounded-[10px] gap-4"}>
 
                         <InputField name={"Nom de l'hôte"}
                                     id={"hostname"}
@@ -282,11 +256,10 @@ export default function NewProperty(){
                                     error={!!errors.hostName}
                                     className={"w-full"}
                         />
-                        <InputPic name={"Photo de profil"} id={"hostpic"} setFile={setHostPicFile} error={!!errors.hostPicture} />
+                        <InputPic name={"Photo de profil"} id={"hostPic"} setFile={setHostPicFile}
+                                  error={!!errors.hostPicture}/>
                     </div>
                 </div>
-
-
 
 
             </div>

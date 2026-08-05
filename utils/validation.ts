@@ -4,13 +4,17 @@ export interface LoginFormData {
     email: string;
     password: string;
 }
+
 export interface RegisterFormData extends LoginFormData {
     lastname: string;
     firstname: string;
     acceptedTerms: boolean;
 }
 
-
+/**
+ * Validate infos form the register form
+ * @param data
+ */
 export function validateRegisterForm(data: RegisterFormData) {
 
     const errors: {
@@ -57,6 +61,10 @@ export function validateRegisterForm(data: RegisterFormData) {
     };
 }
 
+/**
+ * Validate infos from the login form
+ * @param data
+ */
 export function validateLoginForm(data: LoginFormData) {
 
     const errors: {
@@ -89,6 +97,10 @@ interface NewPropertyFormData {
     hostPicFile: File | null;
 }
 
+/**
+ * Validate infos from the property form
+ * @param data
+ */
 export function validateNewPropertyForm(data: NewPropertyFormData) {
 
     const errors: {

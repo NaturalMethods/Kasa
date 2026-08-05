@@ -1,5 +1,3 @@
-
-
 interface InputFieldProps {
 
     name: string;
@@ -14,9 +12,35 @@ interface InputFieldProps {
     labelVisible?: boolean;
 }
 
-export function InputField({name,id,type,placeholder="",value,setValue,error = false,className, readOnly, labelVisible = true}: InputFieldProps) {
+/**
+ * Custom input field
+ * @param param0
+ * @param param0.name
+ * @param param0.id
+ * @param param0.type
+ * @param param0.placeholder
+ * @param param0.value
+ * @param param0.setValue
+ * @param param0.error
+ * @param param0.className
+ * @param param0.readOnly
+ * @param param0.labelVisible
+ * @constructor
+ */
+export function InputField({
+                               name,
+                               id,
+                               type,
+                               placeholder = "",
+                               value,
+                               setValue,
+                               error = false,
+                               className,
+                               readOnly,
+                               labelVisible = true
+                           }: InputFieldProps) {
 
-    return(
+    return (
 
         <div className={`flex flex-col gap-1 ${className}`}>
             {labelVisible && <label

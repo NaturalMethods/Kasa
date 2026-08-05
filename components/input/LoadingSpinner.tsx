@@ -1,15 +1,27 @@
+import React from "react";
 
 interface LoadingSpinnerProps {
-
     loading: boolean;
     children?: React.ReactNode;
+    minHeight?: string;
 }
 
-export function LoadingSpinner({ loading, children }: LoadingSpinnerProps ) {
+/**
+ * That spinner is displayed when request are being send and waiting for response
+ * @param param0
+ * @param param0.loading
+ * @param param0.children
+ * @param param0.minHeight
+ * @constructor
+ */
+export function LoadingSpinner({
+                                   loading,
+                                   children,
+                                   minHeight = "min-h-20"
+                               }: LoadingSpinnerProps) {
 
-    return(
-
-        <div className="relative min-h-20">
+    return (
+        <div className={`relative ${minHeight}`}>
             <div
                 className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
                     loading
@@ -18,7 +30,7 @@ export function LoadingSpinner({ loading, children }: LoadingSpinnerProps ) {
                 }`}
             >
                 <div className="flex h-20 items-center justify-center">
-                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#99331A]/20 border-t-[#99331A]" />
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#99331A]/20 border-t-[#99331A]"/>
                 </div>
             </div>
 
@@ -34,9 +46,5 @@ export function LoadingSpinner({ loading, children }: LoadingSpinnerProps ) {
                 </div>
             </div>
         </div>
-
-
-
-    )
-
+    );
 }

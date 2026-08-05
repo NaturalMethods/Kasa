@@ -8,6 +8,10 @@ import {useRouter} from "next/navigation"
 import {VerticalSeparator} from "@/components/header/VerticalSeparator";
 import {MobileMenu} from "@/components/header/MobileMenu";
 
+/**
+ * Content of the header
+ * @constructor
+ */
 export default function Header() {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,7 +50,7 @@ export default function Header() {
             } sm:h-21.25 sm:flex-row sm:items-center sm:justify-center`}
         >
 
-            <MobileMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+            <MobileMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
 
             <div
                 className="hidden md:pl-25 md:pr-25 sm:flex sm:shadow-[0px_4px_4px_rgba(182,182,182,0.05)] sm:rounded-[10px] sm:bg-white lg:min-w-196.5 sm:w-fit sm:flex-row sm:h-14 sm:px-5 sm:items-center sm:justify-center sm:gap-8">

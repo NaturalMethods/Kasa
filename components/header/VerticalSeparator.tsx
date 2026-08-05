@@ -1,9 +1,12 @@
 import Image from "next/image";
 
+/**
+ * Vertical line visible between icon in the header
+ * @constructor
+ */
+export function VerticalSeparator() {
 
-export function VerticalSeparator(){
-
-    return(
+    return (
         <div className="flex items-center">
             <Image
                 src="/icons/VerticalLine.svg"

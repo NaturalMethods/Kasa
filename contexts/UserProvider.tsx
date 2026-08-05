@@ -1,21 +1,27 @@
 "use client"
 
-import { ReactNode, useEffect, useState } from "react"
-import { UserContext } from "./UserContext"
-import { User } from "@/types/User"
-import { getCurrentUser } from "@/services/auth.service"
+import {ReactNode, useEffect, useState} from "react"
+import {UserContext} from "./UserContext"
+import {User} from "@/types/User"
+import {getCurrentUser} from "@/services/auth.service"
 
 interface UserProviderProps {
     children: ReactNode
 }
 
-export default function UserProvider({ children }: UserProviderProps) {
+/**
+ * Provide datas of the current user and fetch user if connected but not defined
+ * @param param0
+ * @param param0.children
+ * @constructor
+ */
+export default function UserProvider({children}: UserProviderProps) {
     const [user, setUser] = useState<User | null>(null)
     const [loadingUser, setLoadingUser] = useState(true)
 
     useEffect(() => {
         async function loadUser() {
-            if(document.cookie.includes("hasSession=true")) {
+            if (document.cookie.includes("hasSession=true")) {
                 try {
 
 

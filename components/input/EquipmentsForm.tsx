@@ -1,17 +1,24 @@
 "use client"
 
-import { InputCheckBox } from "@/components/input/InputCheckBox";
+import {InputCheckBox} from "@/components/input/InputCheckBox";
 
 interface EquipmentsFormProps {
     selectedEquipments: string[];
     setSelectedEquipments: (equipments: string[]) => void;
 }
 
+/**
+ * Form to select equipments of a property with checkbox
+ * @param param0
+ * @param param0.selectedEquipments
+ * @param param0.setSelectedEquipments
+ * @constructor
+ */
 export function EquipmentsForm({
                                    selectedEquipments,
                                    setSelectedEquipments,
                                }: EquipmentsFormProps) {
-
+//TODO Définir la liste dans un fichier ?
     const equipments = [
         "Micro-ondes",
         "Clic-clac",
@@ -74,7 +81,7 @@ export function EquipmentsForm({
                     <InputCheckBox
                         key={equipment}
                         text={equipment}
-                        linktext=""
+                        linkText=""
                         link=""
                         checked={selectedEquipments.includes(equipment)}
                         onClick={() => toggleEquipment(equipment)}
