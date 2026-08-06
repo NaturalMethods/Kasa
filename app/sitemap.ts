@@ -14,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
 
         ...properties.map((property) => ({
-            url: `${baseUrl}/property/${property.slug}`,
+            url: `${baseUrl}/property/${property.id}-${property.slug}`,
             changeFrequency: "weekly" as const,
             priority: 0.8,
         })),
