@@ -1,13 +1,10 @@
 import React from "react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import {MainRedButton} from "@/components/input/MainRedButton";
 
 export default function NotFound() {
     return (
         <div className="w-full bg-lightOrange sm:pt-10 min-h-screen flex flex-col items-center justify-center">
 
-            <Header/>
 
             <main className="flex-1 flex flex-col items-center justify-center">
                 <div className="flex flex-col items-center justify-center w-85 h-85 gap-10">
@@ -22,8 +19,6 @@ export default function NotFound() {
                     </div>
                 </div>
             </main>
-
-            <Footer/>
 
         </div>
     )

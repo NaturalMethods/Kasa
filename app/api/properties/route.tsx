@@ -7,10 +7,17 @@ import {NextResponse} from "next/server";
  * @constructor
  */
 export async function GET() {
-    const data2 = await apiFetch("/api/properties", "GET")
 
-    return NextResponse.json(await data2.json(), {status: data2.status})
+    const data2 = await apiFetch("/api/properties", "GET");
 
+    const data = await data2.json();
+
+    console.log("GET /api/properties status :", data2.status);
+    console.log("GET /api/properties data :", data);
+
+    return NextResponse.json(data, {
+        status: data2.status,
+    });
 }
 
 /**

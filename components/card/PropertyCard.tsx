@@ -4,6 +4,7 @@ import {PropertyBase} from "@/types/Property";
 import {addFavorite, removeFavorite} from "@/services/properties.service";
 import {useEffect, useState} from "react";
 import {formatImageUrl} from "@/utils/utils";
+import {useUser} from "@/contexts/useUser";
 
 interface PropertyCardProps {
     property: PropertyBase;
@@ -20,6 +21,7 @@ interface PropertyCardProps {
  */
 export function PropertyCard({property, favorite = false}: PropertyCardProps) {
 
+    const {user} = useUser();
     const [isFavorite, setIsFavorite] = useState(favorite);
 
     useEffect(() => {
@@ -30,6 +32,8 @@ export function PropertyCard({property, favorite = false}: PropertyCardProps) {
      * Set the color of the favorite icon
      */
     async function handleFavorite() {
+
+        if (!user) {return}
 
         if (isFavorite) {
             const resp = await removeFavorite(property.id);

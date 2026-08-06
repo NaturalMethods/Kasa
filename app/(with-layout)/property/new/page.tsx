@@ -50,6 +50,7 @@ export default function NewProperty() {
     const [propertyCoverFile, setPropertyCoverFile] = useState<File | null>(null);
     const [propertyPicturesFile, setPropertyPicturesFile] = useState<(File | null)[]>([null]);
     const [hostPicFile, setHostPicFile] = useState<File | null>(null);
+    const [postalCode, setPostalCode] = useState("");
 
     /**
      * Store which field is in error
@@ -155,8 +156,13 @@ export default function NewProperty() {
             /**
              * Set url of images in the property payload and send it
              */
-            const propertyPayload = getUrlImages(property, uploadedImages);
-
+            const propertyPayload = getUrlImages(
+                {
+                    ...property,
+                    location: `${property.location} - ${postalCode}`,
+                },
+                uploadedImages
+            );
             await sendProperty(propertyPayload);
 
 
@@ -215,10 +221,12 @@ export default function NewProperty() {
                                className={"font-normal text-[12px] text-darkGrey h-30"}
                                error={!!errors.description}
                     />
-                    {/* TODO Concaténer localisation + code postal */}
-                    <InputField name={"Code postal"}
-                                id={"propertyCode"}
-                                className={"font-normal text-[12px] text-darkGrey"}
+                    <InputField
+                        name={"Code postal"}
+                        id={"propertyCode"}
+                        value={postalCode}
+                        setValue={setPostalCode}
+                        className={"font-normal text-[12px] text-darkGrey"}
                     />
                     <InputField name={"Localisation"}
                                 id={"propertyLoc"}

@@ -1,6 +1,10 @@
 import "./globals.css"
 import UserProvider from "@/contexts/UserProvider";
 import { Inter } from "next/font/google";
+import Footer from "@/components/layout/Footer";
+import React from "react";
+import Header from "@/components/layout/Header";
+import {MessageProvider} from "@/contexts/MessageContext";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const inter = Inter({
@@ -15,7 +19,11 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
       <html lang="fr">
       <body>
         <UserProvider>
-            {children}
+            <MessageProvider>
+                <Header/>
+                {children}
+                <Footer/>
+            </MessageProvider>
         </UserProvider>
       </body>
       </html>

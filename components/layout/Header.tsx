@@ -7,12 +7,15 @@ import {logout} from "@/services/auth.service";
 import {useRouter} from "next/navigation"
 import {VerticalSeparator} from "@/components/header/VerticalSeparator";
 import {MobileMenu} from "@/components/header/MobileMenu";
+import {useMessage} from "@/contexts/MessageContext";
 
 /**
  * Content of the header
  * @constructor
  */
 export default function Header() {
+
+    const { openMessage } = useMessage();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -109,7 +112,7 @@ export default function Header() {
                         <VerticalSeparator/>
 
 
-                        <Link href="/about" aria-label="Messagerie">
+                        <button aria-label="Messagerie" onClick={() => openMessage(12)}>
                             <Image
                                 src="/icons/Message.svg"
                                 width={10}
@@ -117,7 +120,7 @@ export default function Header() {
                                 alt=""
                                 className="h-2.5 w-2.5"
                             />
-                        </Link>
+                        </button>
 
                         <VerticalSeparator/>
 

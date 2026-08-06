@@ -13,7 +13,6 @@ export async function getProperties() {
  * @param propertyId
  */
 export async function getProperty(propertyId: string) {
-
     return await requestFetch(`/api/properties/${propertyId}`, "GET")
 }
 

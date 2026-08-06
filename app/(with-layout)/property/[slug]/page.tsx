@@ -1,7 +1,6 @@
 import {notFound} from "next/navigation";
 import Image from "next/image";
 
-import {getProperty} from "@/services/properties.service";
 import {PropertyDetail} from "@/types/Property";
 
 import {ReturnButton} from "@/components/input/ReturnButton";
@@ -12,6 +11,7 @@ import {PicLightBox} from "@/components/card/PicLightBox";
 
 import {formatImageUrl} from "@/utils/utils";
 import {PropertyJsonLd} from "@/components/seo/PropertyJsonLd";
+import {getPropertyServer} from "@/services/properties.server.service";
 
 
 interface PropertyPageProps {
@@ -33,7 +33,9 @@ export default async function PropertyPage({
 
     const propertyId = slug.split("-")[0];
 
-    const response = await getProperty(propertyId);
+    const response = await getPropertyServer(propertyId);
+
+    console.log("APRES GET PROPERTY", response.status);
 
     if (response.status === 404 || !response.ok) {
         notFound();

@@ -1,5 +1,3 @@
-import Header from "@/components/layout/Header"
-import Footer from "@/components/layout/Footer"
 import React from "react"
 import {Metadata} from "next";
 
@@ -19,13 +17,11 @@ export default function Layout({
     return (
         <div className="w-full bg-lightOrange sm:pt-10 min-h-screen flex flex-col items-center justify-cente">
 
-            <Header/>
+
 
             <main className="flex-1 flex flex-col">
                 {children}
             </main>
-
-            <Footer/>
 
         </div>
     )
