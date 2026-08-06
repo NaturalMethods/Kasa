@@ -1,12 +1,10 @@
 import type { MetadataRoute } from "next"
-import { getProperties } from "@/services/properties.service"
-import { PropertyBase } from "@/types/Property"
+import { getPropertiesForSitemap } from "@/services/properties.sitemap.service"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = "https://arcae.fr"
 
-    const response = await getProperties()
-    const properties: PropertyBase[] = await response.json()
+    const properties = await getPropertiesForSitemap()
 
     return [
         {

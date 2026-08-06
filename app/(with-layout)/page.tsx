@@ -33,6 +33,7 @@ export default function Home() {
             try {
                 const response = await getProperties();
                 const data = await response.json();
+                console.log("data:",data);
                 setProperties(data);
 
                 if (!user?.id) {
