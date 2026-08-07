@@ -4,7 +4,7 @@ import path from "path";
 const dbPath = path.join(
     process.cwd(),
     "database",
-    "messages.sqlite"
+    "message.sqlite"
 );
 
 const db = new Database(dbPath);

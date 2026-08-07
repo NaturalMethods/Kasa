@@ -35,14 +35,11 @@ export default async function PropertyPage({
 
     const response = await getPropertyServer(propertyId);
 
-    console.log("APRES GET PROPERTY", response.status);
-
     if (response.status === 404 || !response.ok) {
         notFound();
     }
 
     const propertyTemp: PropertyDetail = await response.json();
-
 
     const property: PropertyDetail = {
         ...propertyTemp,

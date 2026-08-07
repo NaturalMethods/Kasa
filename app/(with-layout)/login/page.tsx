@@ -118,8 +118,13 @@ export default function Login() {
                 <InputField name={"Mot de passe"} id={"password"} type="password" value={password}
                             setValue={setPassword} error={!!errors.password}/>
 
-            </div>
+                {loginError && (
+                    <p className="font-bold text-red-500">
+                        {loginError}
+                    </p>
+                )}
 
+            </div>
             <div className="flex flex-col items-center justify-center gap-6">
 
                 <MainRedButton width={230} height={36} type="submit" disabled={isLoading}>

@@ -8,6 +8,8 @@ import {PropertyDetail} from "@/types/Property";
  */
 export function formatImageUrl(image?: string) {
 
+
+
     if (!image) {
         return "/icons/ImgNotFound.svg";
     }
@@ -22,7 +24,7 @@ export function formatImageUrl(image?: string) {
 
     const filename = image.replace(/^\/uploads\//, "");
 
-    return `/api/images/${filename}`;
+    return `/api/uploads/image/${filename}`;
 }
 
 interface uploadedImg {
@@ -36,6 +38,7 @@ interface uploadedImg {
  * @param uploadedImages
  */
 export function getUrlImages(property: PropertyDetail, uploadedImages: uploadedImg[]) {
+
     const cover = uploadedImages.find(
         (upload) => upload.purpose === "property-cover"
     )!.url;
@@ -44,21 +47,24 @@ export function getUrlImages(property: PropertyDetail, uploadedImages: uploadedI
         .filter((upload) => upload.purpose === "property-picture")
         .map((upload) => upload.url);
 
+
     const hostPicture = uploadedImages.find(
         (upload) => upload.purpose === "host-picture"
     )!.url;
 
-    // 3 - Construction payload
+
     return {
         ...property,
         cover,
-        pictures,
+        pictures: [
+            cover,
+            ...pictures,
+        ],
         host: {
             ...property.host!,
             picture: hostPicture,
         },
     };
-
 }
 
 /**
@@ -96,4 +102,12 @@ export function setPropertyImagesUploadErrors(error: unknown, setErrors: (errors
         });
     }
 
+}
+
+export function formatMessageTime(date: string) {
+    return new Date(date).toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+    }).toLowerCase();
 }

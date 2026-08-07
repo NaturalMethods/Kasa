@@ -12,9 +12,6 @@ export async function GET() {
 
     const data = await data2.json();
 
-    console.log("GET /api/properties status :", data2.status);
-    console.log("GET /api/properties data :", data);
-
     return NextResponse.json(data, {
         status: data2.status,
     });

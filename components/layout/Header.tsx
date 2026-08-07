@@ -8,6 +8,7 @@ import {useRouter} from "next/navigation"
 import {VerticalSeparator} from "@/components/header/VerticalSeparator";
 import {MobileMenu} from "@/components/header/MobileMenu";
 import {useMessage} from "@/contexts/MessageContext";
+import {useUser} from "@/contexts/useUser";
 
 /**
  * Content of the header
@@ -21,7 +22,11 @@ export default function Header() {
 
     const router = useRouter()
 
+    const {user} = useUser();
+
     async function handleLogout() {
+
+        if(!user) return
 
         await logout()
 
@@ -112,7 +117,10 @@ export default function Header() {
                         <VerticalSeparator/>
 
 
-                        <button aria-label="Messagerie" onClick={() => openMessage(12)}>
+                        <button
+                            aria-label="Messagerie"
+                            onClick={user ? () => openMessage(12) : undefined}
+                        >
                             <Image
                                 src="/icons/Message.svg"
                                 width={10}

@@ -3,6 +3,7 @@ import { jwtVerify } from "jose"
 
 const publicRoutes = [
     "/",
+    "/about",
     "/login",
     "/api/login",
     "/signin",
@@ -17,7 +18,10 @@ export async function proxy(req: NextRequest) {
     // Autoriser les routes publiques
     if (
         publicRoutes.includes(pathname) ||
-        pathname.startsWith("/property/") ||
+        (
+            pathname.startsWith("/property/")
+            && !pathname.startsWith("/property/new")
+        ) ||
         pathname.startsWith("/api/properties")
     ) {
         return NextResponse.next()

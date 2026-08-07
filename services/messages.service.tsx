@@ -1,29 +1,19 @@
-import db from "@/utils/database";
+import {requestFetch} from "@/services/request.service";
 
-export function getMessages() {
-    return db
-        .prepare(
-            "SELECT * FROM messages ORDER BY date ASC"
-        )
-        .all();
+
+export async function getChats(userId: number) {
+    return await requestFetch(`/api/messages/${userId}`, "GET")
 }
 
+export async function getConversation(userId: number, correspondentId: number) {
 
-export function createMessage(
-    text: string,
-    expediteur: number,
-    receveur: number
-) {
+    return await requestFetch(
+        `/api/messages/${userId}/${correspondentId}`, 'GET');
+}
 
-    return db
-        .prepare(`
-            INSERT INTO messages
-            (text, expediteur, receveur)
-            VALUES (?, ?, ?)
-        `)
-        .run(
-            text,
-            expediteur,
-            receveur
-        );
+export async function sendMessage(message: { text: string; senderId: number; receiverId: number; }) {
+
+
+    return await requestFetch("/api/messages","POST", message);
+
 }

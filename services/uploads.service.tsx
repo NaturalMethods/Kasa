@@ -1,7 +1,5 @@
 import {requestFetch, requestFileFetch} from "@/services/request.service";
 
-
-//TODO si c'est un owner qui upload et supprime les images ?
 /**
  * Send file (image only) to be uploaded to the backend
  * @param file

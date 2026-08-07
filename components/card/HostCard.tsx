@@ -1,6 +1,9 @@
+"use client"
 import Image from "next/image";
 import {MainRedButton} from "@/components/input/MainRedButton";
 import {PropertyDetail} from "@/types/Property";
+import {useMessage} from "@/contexts/MessageContext";
+import {useUser} from "@/contexts/useUser";
 
 interface HostCardProps {
     property?: PropertyDetail
@@ -13,6 +16,11 @@ interface HostCardProps {
  * @constructor
  */
 export function HostCard({property}: HostCardProps) {
+
+    const { openMessage } = useMessage();
+    const {user} = useUser();
+
+    console.log("avg",property?.rating_avg);
 
     return (
 
@@ -37,14 +45,13 @@ export function HostCard({property}: HostCardProps) {
                         height={23}
                         alt={property?.title ?? "Titre d'image"}
                     />
-                    {/* TODO rating de l'hôte ? */}
-                    <p className={"text-[16px]"}>{property?.ratings_count}</p>
+                    <p className={"text-[16px]"}>{property?.rating_avg}</p>
                 </div>
 
             </div>
-            {/* TODO Connecter les boutons a la page messagerie */}
-            <MainRedButton width={297} height={36}>{"Contacter l'hôte"}</MainRedButton>
-            <MainRedButton width={297} height={36}>{"Envoyer un message"}</MainRedButton>
+            {/* TODO Link le chat a l'id correspondant */}
+            <MainRedButton onClick={user ? () => openMessage(property?.host?.id ?? 0) : undefined} width={297} height={36}>{"Contacter l'hôte"}</MainRedButton>
+            <MainRedButton onClick={user ? () => openMessage(property?.host?.id ?? 0) : undefined} width={297} height={36}>{"Envoyer un message"}</MainRedButton>
         </div>
 
     )
