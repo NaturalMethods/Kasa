@@ -16,19 +16,21 @@ import {useUser} from "@/contexts/useUser";
  */
 export default function Header() {
 
-    const { openMessage } = useMessage();
+    const {openMessage} = useMessage();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const router = useRouter()
 
-    const {user} = useUser();
+    const {user, setUser} = useUser();
 
     async function handleLogout() {
 
-        if(!user) return
+        if (!user) return
 
         await logout()
+
+        setUser(null);
 
         router.push("/login")
         router.refresh()
@@ -103,7 +105,7 @@ export default function Header() {
 
                     <div className="flex flex-row gap-2">
 
-                        <Link href="/favorites" aria-label="Favoris">
+                        <Link href="/favorites" aria-label="Favoris" prefetch={false}>
                             <Image
                                 src="/icons/Heart.svg"
                                 width={10}

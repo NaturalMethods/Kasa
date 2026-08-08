@@ -1,15 +1,8 @@
 import {NextRequest, NextResponse} from "next/server";
 import {createMessage} from "@/services/messages.server.service";
-import {getTokenFromCookie} from "@/utils/utilsServer";
-import {createErrorResponse} from "@/app/api/api";
+import { verifyTokenById} from "@/utils/utilsServer";
 
 export async function POST(req: NextRequest) {
-
-
-    {/* const token = await getTokenFromCookie()
-
-    if(!token){ createErrorResponse(401, "Unauthorized") }
-   TODO ajouter la vérif du token */}
 
     const body = await req.json();
 
@@ -18,6 +11,15 @@ export async function POST(req: NextRequest) {
         senderId,
         receiverId
     } = body;
+
+    const isValid = await verifyTokenById(Number(senderId));
+
+    if (!isValid) {
+        return NextResponse.json(
+            { error: "Non authentifié" },
+            { status: 401 }
+        );
+    }
 
 
     if (!text || !senderId || !receiverId) {

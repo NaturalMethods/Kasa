@@ -1,6 +1,7 @@
 import {cookies} from "next/headers";
 import {NextResponse} from "next/server";
 import {User} from "@/types/User";
+import {jwtVerify} from "jose";
 
 /**
  * Get the token from the cookie from the client
@@ -43,4 +44,36 @@ export async function setTokenFromCookie(user: User, token: string) {
         path: "/",
     });
     return response;
+}
+
+export async function getUserIdFromToken(): Promise<number | null> {
+
+    const token = (await cookies()).get("kasatoken")?.value;
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+        const { payload } = await jwtVerify(
+            token,
+            new TextEncoder().encode(process.env.JWT_SECRET)
+        );
+
+        if (typeof payload.id !== "number") {
+            return null;
+        }
+
+        return payload.id;
+
+    } catch {
+        return null;
+    }
+}
+
+export async function verifyTokenById(userId:number) {
+
+    const tokenId = await getUserIdFromToken();
+
+    return tokenId !== null && tokenId === userId;
 }

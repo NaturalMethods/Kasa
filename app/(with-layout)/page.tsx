@@ -24,18 +24,17 @@ export default function Home() {
     useEffect(() => {
 
         async function loadData() {
+
             setLoading(true);
 
-            /**
-             * Try to fetch properties to be displayed on the home page
-             * and the favorites of the user if he is defined
-             */
             try {
                 const response = await getProperties();
                 const data = await response.json();
+
                 setProperties(data);
 
                 if (!user?.id) {
+                    setFavorites([]);
                     return;
                 }
 
@@ -46,13 +45,16 @@ export default function Home() {
 
             } catch (error) {
                 console.error(error);
+
             } finally {
                 setLoading(false);
             }
         }
 
         loadData();
+
     }, [user]);
+
 
     return (
 

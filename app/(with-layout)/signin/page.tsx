@@ -17,8 +17,6 @@ import {useUser} from "@/contexts/useUser";
  */
 export default function Signin() {
 
-    const router = useRouter()
-
     const [lastname, setLastname] = useState("");
     const [firstname, setFirstname] = useState("");
     const [email, setEmail] = useState("");
@@ -103,9 +101,7 @@ export default function Signin() {
                 role: resjson.user.role,
             })
 
-            router.push("/")
-            router.refresh()
-
+            window.location.replace("/");
 
         } catch (err) {
             console.log(err);

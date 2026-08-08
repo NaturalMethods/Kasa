@@ -43,10 +43,35 @@ export function MessageModal() {
             if (!user) return;
 
             const response = await getChats(user.id);
-            const data = await response.json();
+            const data: ChatPreview[] = await response.json();
+
+            // Si on ouvre la messagerie depuis un logement avec un correspondant précis
+            if (receiverId) {
+
+                const existingChat = data.find(
+                    (chat) => chat.correspondantId === receiverId
+                );
+
+                if (existingChat) {
+                    setChats(data);
+                } else {
+                    setChats([
+                        {
+                            correspondantId: receiverId,
+                            text: "",
+                            date: "",
+                        },
+                        ...data,
+                    ]);
+                }
+
+                setSelectedChatId(receiverId);
+                return;
+            }
 
             setChats(data);
 
+            // Sinon on sélectionne la première conversation existante
             if (data.length > 0) {
                 setSelectedChatId(data[0].correspondantId);
             }
@@ -54,7 +79,7 @@ export function MessageModal() {
 
         loadChats();
 
-    }, [isOpen, user]);
+    }, [isOpen, user, receiverId]);
 
     useEffect(() => {
 
@@ -78,6 +103,7 @@ export function MessageModal() {
 
             setConversation(data);
         }
+
         loadConversation();
 
     }, [selectedChatId, user, chats]);
@@ -111,7 +137,6 @@ export function MessageModal() {
             return;
         }
 
-
         setMessage("");
 
         // recharge la conversation
@@ -129,18 +154,18 @@ export function MessageModal() {
             onClick={closeMessage}
         >
             <div
-                className="lg:w-264.75 lg:h-203.5 flex flex-row items-start bg-lightOrange rounded-[10px] shadow-[0px_4px_14px_3px_rgba(0,0,0,0.05)]"
+                className="lg:w-264.75 h-full max-h-203.5 lg:h-203.5 flex flex-row items-start bg-lightOrange rounded-[10px] shadow-[0px_4px_14px_3px_rgba(0,0,0,0.05)]"
                 onClick={(e) => e.stopPropagation()}>
 
 
                 {/* Left Column */}
                 <div
-                    className={"box-border flex flex-col items-start w-94 h-full gap-1.75 pl-2 pr-2 pt-3 pb-3 bg-white border-r border-lightGrey rounded-l-[10px] "}>
+                    className={"flex flex-col items-start lg:w-94 h-full gap-1.75 pl-2 pr-2 pt-3 pb-3 bg-white border-r border-lightGrey rounded-l-[10px] "}>
 
-                    <div className="flex flex-col pt-4 pb-4 pr-2 pl-2 justify-center items-start gap-2.5">
+                    <div className="flex flex-col w-full pt-4 pb-4 pr-2 pl-2 justify-center items-start gap-2.5">
 
                         <button
-                            className="flex items-center justify-center w-23.25 h-9 gap-1 bg-lightGrey rounded-[10px]"
+                            className="flex items-center justify-center lg:w-23.25 h-9 gap-1 bg-lightGrey rounded-[10px]"
                             onClick={closeMessage}>
                             <Image
                                 src="/icons/LeftArrow.svg"

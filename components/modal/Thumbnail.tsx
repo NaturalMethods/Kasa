@@ -37,7 +37,7 @@ export function Thumbnail({
                 pt-2 
                 pb-2 
                 gap-2.5 
-                w-90 
+                lg:w-90 
                 h-15.25 
                 ${selected ? "bg-lightOrange" : "bg-white"} 
                 border-b 

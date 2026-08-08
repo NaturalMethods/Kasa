@@ -49,7 +49,6 @@ export function HostCard({property}: HostCardProps) {
                 </div>
 
             </div>
-            {/* TODO Link le chat a l'id correspondant */}
             <MainRedButton onClick={user ? () => openMessage(property?.host?.id ?? 0) : undefined} width={297} height={36}>{"Contacter l'hôte"}</MainRedButton>
             <MainRedButton onClick={user ? () => openMessage(property?.host?.id ?? 0) : undefined} width={297} height={36}>{"Envoyer un message"}</MainRedButton>
         </div>
