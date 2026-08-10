@@ -12,7 +12,7 @@ vi.mock("next/image", () => ({
     ),
 }));
 
-
+//TODO Rajouter le test pour le carousel
 describe("PicLightBox", () => {
 
     it("displays the thumbnail image", () => {

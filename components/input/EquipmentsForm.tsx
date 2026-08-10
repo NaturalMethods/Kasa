@@ -18,7 +18,6 @@ export function EquipmentsForm({
                                    selectedEquipments,
                                    setSelectedEquipments,
                                }: EquipmentsFormProps) {
-//TODO Définir la liste dans un fichier ?
     const equipments = [
         "Micro-ondes",
         "Clic-clac",

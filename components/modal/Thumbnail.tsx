@@ -66,7 +66,7 @@ export function Thumbnail({
                     <div className="flex flex-col gap-1">
 
                         <h4>
-                            {user?.name ?? "Utilisateur"}
+                            {user?.name ?? `Utilisateur`}
                         </h4>
 
                         <span className="font-inter text-[10px] font-normal text-darkGrey">

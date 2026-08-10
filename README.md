@@ -50,6 +50,7 @@ http://localhost:3001 to view the application.
 - TypeScript
 - Tailwind CSS
 - JWT authentication
+- Better SQLite3
 
 ## Project Structure
 

@@ -87,6 +87,8 @@ export default async function PropertyPage({
                     />
 
 
+                    {/* TODO Faire un carousel avec les photos */}
+
                     <div className="flex flex-row lg:flex-col gap-2">
 
                         <div className="flex flex-row gap-2">

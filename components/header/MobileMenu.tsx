@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
+import {useMessage} from "@/contexts/MessageContext";
+import {useUser} from "@/contexts/useUser";
 
 interface MobileMenuProps {
     isMenuOpen: boolean,
@@ -65,6 +67,33 @@ function MobileLink({text, toLink, setIsMenuOpen}: MobileLinkProps) {
 
 }
 
+interface MobileButtonProps {
+    text: string;
+    setIsMenuOpen: (value: boolean) => void;
+    onClick?: () => void;
+}
+
+function MobileButton({
+                          text,
+                          setIsMenuOpen,
+                          onClick,
+                      }: MobileButtonProps) {
+
+    return (
+        <button
+            type="button"
+            className="font-inter text-[24px] font-normal text-left"
+            onClick={() => {
+                setIsMenuOpen(false);
+                onClick?.();
+            }}
+        >
+            {text}
+        </button>
+    );
+}
+
+
 /**
  * Display the mobile menu
  * @param param0
@@ -75,6 +104,8 @@ function MobileLink({text, toLink, setIsMenuOpen}: MobileLinkProps) {
 export function MobileMenu({isMenuOpen, setIsMenuOpen}: MobileMenuProps) {
 
     const router = useRouter();
+    const {user} = useUser();
+    const {openMessage} = useMessage();
 
     return (
         <div className={"flex flex-col gap-10"}>
@@ -99,8 +130,11 @@ export function MobileMenu({isMenuOpen, setIsMenuOpen}: MobileMenuProps) {
                 <MobileLink text={"À propos"} toLink={"/about"} setIsMenuOpen={setIsMenuOpen}/>
                 <hr className="border-lightGrey"/>
 
-                {/* TODO changer le lien du bouton Message dans le header */}
-                <MobileLink text={"Messagerie"} toLink={"/about"} setIsMenuOpen={setIsMenuOpen}/>
+                <MobileButton
+                    text={"Messagerie"}
+                    setIsMenuOpen={setIsMenuOpen}
+                    onClick={user ? () => openMessage(1) : undefined}
+                />
                 <hr className="border-lightGrey"/>
 
                 <MobileLink text={"Favoris"} toLink={"/favorites"} setIsMenuOpen={setIsMenuOpen}/>
