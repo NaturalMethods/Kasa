@@ -4,14 +4,13 @@ import Image from "next/image";
 import {PropertyDetail} from "@/types/Property";
 
 import {ReturnButton} from "@/components/input/ReturnButton";
-import {SidePicture} from "@/components/card/SidePicture";
 import {HostCard} from "@/components/card/HostCard";
 import {EquipmentCard} from "@/components/card/EquipmentCard";
-import {PicLightBox} from "@/components/card/PicLightBox";
 
 import {formatImageUrl} from "@/utils/utils";
 import {PropertyJsonLd} from "@/components/seo/PropertyJsonLd";
 import {getPropertyServer} from "@/services/properties.server.service";
+import {PropertyGallery} from "@/components/card/Diaporama";
 
 
 interface PropertyPageProps {
@@ -78,51 +77,10 @@ export default async function PropertyPage({
                         "w-full flex flex-col items-center justify-center lg:items-start lg:flex-row gap-2"
                     }
                 >
-
-                    <PicLightBox
-                        src={property.cover}
-                        alt={property.title}
-                        className="w-89.5 h-105.25 md:h-89.25 md:w-75.75 rounded-[20px]"
-                        objectPosition="object-cover object-left"
+                    <PropertyGallery
+                        pictures={property.pictures}
+                        title={property.title}
                     />
-
-
-                    {/* TODO Faire un carousel avec les photos */}
-
-                    <div className="flex flex-row lg:flex-col gap-2">
-
-                        <div className="flex flex-row gap-2">
-
-                            <SidePicture
-                                pictureTitle={property.title}
-                                pictureUrl={property.pictures[1]}
-                            />
-
-                            <SidePicture
-                                pictureTitle={property.title}
-                                pictureUrl={property.pictures[2]}
-                            />
-
-                        </div>
-
-
-                        <div className="flex flex-row gap-2">
-
-                            <SidePicture
-                                pictureTitle={property.title}
-                                pictureUrl={property.pictures[3]}
-                            />
-
-                            <SidePicture
-                                pictureTitle={property.title}
-                                pictureUrl={property.pictures[4]}
-                            />
-
-                        </div>
-
-                    </div>
-
-
                     <div className="hidden lg:block">
                         <HostCard property={property}/>
                     </div>

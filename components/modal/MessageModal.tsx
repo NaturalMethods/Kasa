@@ -35,7 +35,6 @@ export function MessageModal() {
         isOpen,
         closeMessage,
         receiverId,
-        propertyId,
     } = useMessage();
 
     useEffect(() => {
@@ -173,22 +172,19 @@ export function MessageModal() {
             >
 
                 {/* Left Column */}
-                <div
-                    className={`
-flex flex-col items-start
-w-full
-h-full
-gap-1.75
-pl-2 pr-2 pt-3 pb-3
-bg-white
-border-r border-lightGrey
-rounded-none
-
-lg:w-94
-lg:rounded-l-[10px]
-
-${mobileConversationOpen ? "hidden lg:flex" : "flex"}
-`}
+                <div className={`
+                    flex flex-col items-start
+                    w-full
+                    h-full
+                    gap-1.75
+                    pl-2 pr-2 pt-3 pb-3
+                    bg-white
+                    border-r border-lightGrey
+                    rounded-none
+                    lg:w-94
+                    lg:rounded-l-[10px]
+                    ${mobileConversationOpen ? "hidden lg:flex" : "flex"}
+                `}
                 >
 
                     <div className="flex flex-col w-full pt-4 pb-4 pr-2 pl-2 justify-center items-start gap-2.5">
@@ -242,17 +238,15 @@ ${mobileConversationOpen ? "hidden lg:flex" : "flex"}
                 {/* Right Column */}
                 <div
                     className={`
-flex flex-col
-w-full
-h-full
-bg-lightOrange
-overflow-hidden
-rounded-none
-
-lg:rounded-r-[10px]
-
-${mobileConversationOpen ? "flex" : "hidden lg:flex"}
-`}
+                                flex flex-col
+                                w-full
+                                h-full
+                                bg-lightOrange
+                                overflow-hidden
+                                rounded-none
+                                lg:rounded-r-[10px]
+                                ${mobileConversationOpen ? "flex" : "hidden lg:flex"}
+                    `}
                 >
 
                     {/* Mobile back button */}

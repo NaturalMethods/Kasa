@@ -25,7 +25,15 @@ export function MessageTextArea({
     return (
         <div className="relative w-full">
 
+            <label
+                htmlFor="message"
+                className="sr-only"
+            >
+                Message
+            </label>
+
             <textarea
+                id="message"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder="Envoyer un message"

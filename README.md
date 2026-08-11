@@ -1,6 +1,7 @@
 # Kasa
 
 Kasa is a web application that allows users to browse and manage rental accommodations.
+This web application contains database (sqlite3) which is used to store message between users.
 
 ## Getting Started
 
@@ -12,6 +13,16 @@ https://github.com/OpenClassrooms-Student-Center/dev-react-P12
 
 Follow the instructions provided in the repository to install and start the backend server.
 
+### Database SQLITE3
+The database is located in the database folder with the name "message.sqlite" and contains
+a table named messages with the following columns:
+
+- id: integer primary key 
+- text: text
+- expediteur: integer
+- receveur: integer
+- date: Datetime
+
 ### Environment variables
 
 Create a `.env.local` file in the root directory of the Kasa project.
@@ -21,7 +32,12 @@ The file must contain the same `JWT_SECRET` value as the backend server, or use 
 ```bash
 JWT_SECRET="change-me-in-prod"
 ```
+and also contain :
 
+```bash
+BACKEND_PUBLIC="localhost"
+BACKEND_PORT="3000"
+```
 ### Install dependencies
 
 Install the project dependencies:
@@ -55,7 +71,7 @@ http://localhost:3001 to view the application.
 ## Project Structure
 
 ```text
-src/
+kasa/
 ├── app/            # Application pages and routes
 ├── components/     # Reusable React components
 ├── contexts/       # React contexts

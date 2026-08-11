@@ -1,20 +1,19 @@
 import {PicLightBox} from "@/components/card/PicLightBox";
 
-
 interface SidePictureProps {
-
-    pictureTitle: string
+    pictureTitle: string;
     pictureUrl?: string;
+    onClick?: () => void;
 }
 
 /**
- * Little pictures on the right side of the cover in the property detail page
- * @param param0
- * @param param0.pictureTitle
- * @param param0.pictureUrl
- * @constructor
+ * Little picture displayed next to the cover.
  */
-export function SidePicture({pictureTitle, pictureUrl}: SidePictureProps) {
+export function SidePicture({
+                                pictureTitle,
+                                pictureUrl,
+                                onClick,
+                            }: SidePictureProps) {
 
     return (
         <PicLightBox
@@ -22,6 +21,7 @@ export function SidePicture({pictureTitle, pictureUrl}: SidePictureProps) {
             alt={pictureTitle}
             className="w-21 h-27.25 sm:h-43.5 sm:w-36.75 rounded-[20px]"
             objectPosition="object-cover"
+            onClick={onClick}
         />
-    )
+    );
 }
