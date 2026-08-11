@@ -13,9 +13,6 @@ const publicRoutes = [
 
 export async function proxy(req: NextRequest) {
 
-    console.log("PATH", req.nextUrl.pathname);
-    console.log("COOKIE", req.cookies.get("kasatoken")?.value);
-
     const { pathname } = req.nextUrl
 
     // Autoriser les routes publiques

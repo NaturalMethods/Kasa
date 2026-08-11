@@ -93,7 +93,7 @@ export default function Login() {
             router.refresh()
 
         } catch (err) {
-            console.log(err);
+            //console.log(err);
         } finally {
             setIsLoading(false)
         }

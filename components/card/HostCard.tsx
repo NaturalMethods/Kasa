@@ -20,8 +20,6 @@ export function HostCard({property}: HostCardProps) {
     const { openMessage } = useMessage();
     const {user} = useUser();
 
-    console.log("avg",property?.rating_avg);
-
     return (
 
         <div className="flex flex-col bg-white rounded-[10px] w-86.25 h-70.25 p-6 gap-2">

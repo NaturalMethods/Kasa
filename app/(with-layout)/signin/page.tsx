@@ -7,7 +7,6 @@ import {InputField} from "@/components/input/InputField";
 import {InputCheckBox} from "@/components/input/InputCheckBox";
 import {validateRegisterForm} from "@/utils/validation";
 import {register} from "@/services/auth.service";
-import {useRouter} from "next/navigation";
 import {useUser} from "@/contexts/useUser";
 
 
@@ -104,7 +103,7 @@ export default function Signin() {
             window.location.replace("/");
 
         } catch (err) {
-            console.log(err);
+            //console.log(err);
         } finally {
             setIsLoading(false)
         }
